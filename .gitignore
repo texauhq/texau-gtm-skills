@@ -1,0 +1,9 @@
+# State written by bin/* at runtime (per-user, per-host)
+.texau-skills/
+node_modules/
+*.log
+.DS_Store
+
+# Local overrides (not committed)
+.env
+.env.local

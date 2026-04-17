@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# Emits one-line KEY: value pairs consumed by every skill's preamble.
+# Contract — these keys are stable; only add, never rename:
+#   CATALOG_OK, CATALOG_AGE, CATALOG_STALE, CATALOG_TOOLS,
+#   FILTERS_OK, API_KEY_SET, SKILLS_VERSION, NET, UPGRADE
+
+set -eu
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+LIB="$ROOT/_lib"
+CATALOG="$LIB/mcp-catalog.json"
+FILTERS="$LIB/filters-catalog.json"
+STATE_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+LAST_SYNC="$STATE_DIR/.last-sync"
+STALE_SECONDS="${TEXAU_SKILLS_STALE:-$((7 * 24 * 3600))}"
+UPGRADE_CACHE="$STATE_DIR/.upgrade-cache"
+UPGRADE_TTL=3600
+mkdir -p "$STATE_DIR"
+
+if [ -f "$CATALOG" ] && command -v jq >/dev/null 2>&1 && jq -e '.tools | length > 0' "$CATALOG" >/dev/null 2>&1; then
+  echo "CATALOG_OK: yes"
+  echo "CATALOG_TOOLS: $(jq '.tools | length' "$CATALOG")"
+else
+  echo "CATALOG_OK: no"
+  echo "CATALOG_TOOLS: 0"
+fi
+
+if [ -f "$LAST_SYNC" ]; then
+  last_epoch="$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$(cat "$LAST_SYNC")" +%s 2>/dev/null || \
+                date -d "$(cat "$LAST_SYNC")" +%s 2>/dev/null || echo 0)"
+  now_epoch="$(date +%s)"
+  age=$((now_epoch - last_epoch))
+  echo "CATALOG_AGE: $age"
+  if [ "$age" -gt "$STALE_SECONDS" ]; then echo "CATALOG_STALE: yes"; else echo "CATALOG_STALE: no"; fi
+else
+  echo "CATALOG_AGE: never"
+  echo "CATALOG_STALE: yes"
+fi
+
+if [ -f "$FILTERS" ] && command -v jq >/dev/null 2>&1 && jq -e '.seniority | length > 0' "$FILTERS" >/dev/null 2>&1; then
+  echo "FILTERS_OK: yes"
+else
+  echo "FILTERS_OK: no"
+fi
+
+if [ -n "${TEXAU_API_KEY:-}" ]; then
+  echo "API_KEY_SET: yes"
+else
+  echo "API_KEY_SET: no"
+fi
+
+if [ -f "$ROOT/VERSION" ]; then
+  echo "SKILLS_VERSION: $(cat "$ROOT/VERSION")"
+else
+  echo "SKILLS_VERSION: unknown"
+fi
+
+if command -v curl >/dev/null 2>&1 && \
+   curl -fsS --max-time 2 -o /dev/null "${TEXAU_MCP_ORIGIN:-https://mcp.texau.com}/health" 2>/dev/null; then
+  echo "NET: online"
+else
+  echo "NET: offline"
+fi
+
+emit_upgrade() {
+  local cur="$1" latest="$2"
+  if [ -n "$latest" ] && [ "$latest" != "$cur" ]; then
+    echo "UPGRADE: $latest"
+  else
+    echo "UPGRADE: none"
+  fi
+}
+
+cur_ver="$(cat "$ROOT/VERSION" 2>/dev/null || echo 0.0.0)"
+if [ -f "$UPGRADE_CACHE" ]; then
+  cache_epoch="$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$(head -1 "$UPGRADE_CACHE")" +%s 2>/dev/null || \
+                 date -d "$(head -1 "$UPGRADE_CACHE")" +%s 2>/dev/null || echo 0)"
+  now_epoch="$(date +%s)"
+  if [ $((now_epoch - cache_epoch)) -lt "$UPGRADE_TTL" ]; then
+    emit_upgrade "$cur_ver" "$(tail -1 "$UPGRADE_CACHE")"
+    exit 0
+  fi
+fi
+
+# Refresh the upgrade check in the background; never blocks preflight.
+(
+  latest="$(curl -fsS --max-time 3 \
+    https://raw.githubusercontent.com/texau/texau-gtm-skills/main/VERSION 2>/dev/null | tr -d '[:space:]')"
+  {
+    date -u +%Y-%m-%dT%H:%M:%SZ
+    echo "${latest:-$cur_ver}"
+  } > "$UPGRADE_CACHE"
+) >/dev/null 2>&1 &
+
+emit_upgrade "$cur_ver" "$(tail -1 "$UPGRADE_CACHE" 2>/dev/null || echo "$cur_ver")"

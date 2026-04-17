@@ -1,0 +1,62 @@
+{
+  "name": "@texau/gtm-skills",
+  "version": "1.0.0",
+  "description": "Claude Skills pack that turns the TexAu MCP into an opinionated GTM workflow — prospecting, enrichment, account research, competitive intel, list hygiene, and CRM export. Self-updating catalog; works with Claude Code, Claude Desktop, Cursor.",
+  "private": false,
+  "bin": {
+    "texau-skills-sync": "bin/texau-skills-sync",
+    "texau-skills-preflight": "bin/texau-skills-preflight",
+    "texau-skills-config": "bin/texau-skills-config"
+  },
+  "scripts": {
+    "setup": "./setup",
+    "sync": "./bin/texau-skills-sync",
+    "validate": "node scripts/validate-skills.mjs",
+    "check": "./bin/texau-skills-sync --check && node scripts/validate-skills.mjs"
+  },
+  "files": [
+    "bin/",
+    "_lib/",
+    "skills/",
+    "scripts/",
+    "setup",
+    "VERSION",
+    "CLAUDE.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "claude",
+    "claude-skills",
+    "claude-code",
+    "mcp",
+    "model-context-protocol",
+    "texau",
+    "gtm",
+    "sales-intelligence",
+    "linkedin",
+    "prospecting",
+    "email-enrichment",
+    "b2b",
+    "sales-automation",
+    "crm",
+    "hubspot",
+    "salesforce"
+  ],
+  "homepage": "https://github.com/texau/texau-gtm-skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/texau/texau-gtm-skills"
+  },
+  "bugs": {
+    "url": "https://github.com/texau/texau-gtm-skills/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "TexAu",
+    "url": "https://texau.com"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

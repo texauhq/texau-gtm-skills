@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TexAu MCP Catalog",
+  "description": "Machine-readable snapshot of the TexAu MCP tool surface. Consumed by every GTM skill to produce current, cost-accurate tool selections.",
+  "type": "object",
+  "required": ["generated_at", "mcp_endpoint", "api_base", "tools"],
+  "properties": {
+    "generated_at":   { "type": "string", "format": "date-time" },
+    "generated_by":   { "type": "string" },
+    "mcp_endpoint":   { "type": "string", "format": "uri" },
+    "api_base":       { "type": "string", "format": "uri" },
+    "version":        { "type": "string" },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "category", "credits", "billing", "description"],
+        "properties": {
+          "name":         { "type": "string" },
+          "category":     { "type": "string" },
+          "credits":      { "type": "string" },
+          "billing":      { "enum": ["per_call", "per_result", "per_success", "free", "waterfall"] },
+          "sync":         { "type": "boolean" },
+          "description":  { "type": "string" },
+          "followup":     { "type": "string" },
+          "bulk_variant": { "type": "string" },
+          "max_batch":    { "type": "integer" },
+          "filters":      { "type": "integer" },
+          "index":        { "type": "string" }
+        }
+      }
+    },
+    "lead_search_filters": { "type": "object" },
+    "decision_tree":       { "type": "object" }
+  }
+}

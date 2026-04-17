@@ -1,0 +1,126 @@
+{
+  "$schema": "./mcp-catalog.schema.json",
+  "generated_at": "2026-04-17T00:00:00Z",
+  "generated_by": "snapshot (initial)",
+  "mcp_endpoint": "https://mcp.texau.com/mcp",
+  "api_base": "https://v3-api.texau.com/api/v1",
+  "version": "1.0.0",
+  "tools": [
+    { "name": "enrich_profile",         "category": "linkedin_enrichment", "credits": "1 / call",        "billing": "per_call",        "sync": true,  "bulk_variant": "enrich_profiles_bulk",  "description": "Enrich a single LinkedIn profile URL → structured person data." },
+    { "name": "enrich_company",         "category": "linkedin_enrichment", "credits": "1 / call",        "billing": "per_call",        "sync": true,  "bulk_variant": "enrich_companies_bulk", "description": "Enrich a LinkedIn company page → firmographics." },
+    { "name": "enrich_profiles_bulk",   "category": "linkedin_enrichment", "credits": "1 / result",      "billing": "per_result",      "sync": true,  "max_batch": 50,  "description": "Bulk enrich up to 50 LinkedIn profiles in one call." },
+    { "name": "enrich_companies_bulk",  "category": "linkedin_enrichment", "credits": "1 / result",      "billing": "per_result",      "sync": true,  "max_batch": 50,  "description": "Bulk enrich up to 50 LinkedIn companies by ID." },
+
+    { "name": "people_search",          "category": "people_discovery",    "credits": "0.1 / result",    "billing": "per_result",      "sync": true,  "index": "enriched_cache", "description": "Search 700M+ indexed profiles by account/contact filters. Cheapest discovery option." },
+    { "name": "profile_search",         "category": "people_discovery",    "credits": "0.1 / result",    "billing": "per_result",      "sync": true,  "index": "live_linkedin",  "description": "Live LinkedIn profile search by name/title/company/school/location/industry." },
+    { "name": "lead_search",            "category": "people_discovery",    "credits": "0.5 / result",    "billing": "per_result",      "sync": true,  "index": "live_linkedin",  "filters": 30, "description": "Advanced lead search — 30+ filters, inclusion/exclusion, sessionId pagination, Sales Nav URL." },
+    { "name": "search_reference_data",  "category": "people_discovery",    "credits": "0 (free)",        "billing": "free",            "sync": true,  "description": "Reference catalog of valid labels for lead_search (seniority, industries, functions, companySize, profileLanguages)." },
+
+    { "name": "ad_search",              "category": "ads",                 "credits": "0.2 / result",    "billing": "per_result",      "sync": true,  "description": "Search the LinkedIn Ad Library." },
+    { "name": "ad_details",             "category": "ads",                 "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Full ad details — creative variants, impression stats, targeting." },
+
+    { "name": "post_keyword_search",    "category": "posts",               "credits": "6 / call",        "billing": "per_call",        "sync": true,  "description": "Search LinkedIn posts by keyword with date/content/author filters." },
+    { "name": "profile_activities",     "category": "posts",               "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Recent posts / comments / reactions from a specific profile." },
+    { "name": "post_details",           "category": "posts",               "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Full post content + reactions with reactor profiles." },
+    { "name": "post_activities",        "category": "posts",               "credits": "3 / call",        "billing": "per_call",        "sync": true,  "description": "Paginated comments/reactions on a single post." },
+
+    { "name": "find_emails",            "category": "email_batch",         "credits": "2 / person found", "billing": "per_success",    "sync": false, "followup": "check_email_finding",     "description": "Batch email finding — up to 100 people per job. Async — poll for completion." },
+    { "name": "check_email_finding",    "category": "email_batch",         "credits": "0",               "billing": "free",            "sync": true,  "description": "Poll status of a find_emails job. Free." },
+    { "name": "verify_emails",          "category": "email_batch",         "credits": "0.5 / email",     "billing": "per_result",      "sync": false, "followup": "check_email_verification", "description": "Batch email verification — up to 1000 emails per job. Async." },
+    { "name": "check_email_verification","category": "email_batch",        "credits": "0",               "billing": "free",            "sync": true,  "description": "Poll status of a verify_emails job. Free." },
+
+    { "name": "email_finder",           "category": "waterfall",           "credits": "2 success / 1 soft-fail / 0 hard-fail", "billing": "waterfall", "sync": true, "description": "Single-record email finding via multi-provider waterfall. Hard failures are not billed." },
+    { "name": "phone_finder",           "category": "waterfall",           "credits": "3 success / 1 soft-fail / 0 hard-fail", "billing": "waterfall", "sync": true, "description": "Single-record mobile phone finding via waterfall." },
+    { "name": "email_verifier",         "category": "waterfall",           "credits": "1 success / 0.5 soft-fail / 0 hard-fail", "billing": "waterfall", "sync": true, "description": "Single-record email deliverability verification via waterfall." },
+    { "name": "person_enricher",        "category": "waterfall",           "credits": "2 success / 1 soft-fail / 0 hard-fail", "billing": "waterfall", "sync": true, "description": "Enrich a person from their email via waterfall." },
+    { "name": "company_enricher",       "category": "waterfall",           "credits": "2 success / 1 soft-fail / 0 hard-fail", "billing": "waterfall", "sync": true, "description": "Enrich a company from its domain via waterfall." },
+
+    { "name": "web_meta_tags",          "category": "web_intel",           "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "OG / Twitter / SEO meta tags from any URL." },
+    { "name": "web_json_ld",            "category": "web_intel",           "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Structured data (JSON-LD) from any URL." },
+    { "name": "web_pixels",             "category": "web_intel",           "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Tracking pixels / analytics tags on a page." },
+    { "name": "web_scrape",             "category": "web_intel",           "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Full-page HTML + Markdown with anti-bot bypass." },
+    { "name": "web_social_links",       "category": "web_intel",           "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Extract social profile links from any URL." },
+    { "name": "web_tech_stack",         "category": "web_intel",           "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Detect 100+ technologies + GTM signals." },
+    { "name": "web_emails",             "category": "web_intel",           "credits": "3 / call",        "billing": "per_call",        "sync": true,  "description": "Crawl a site and collect all emails." },
+    { "name": "web_sitemap",            "category": "web_intel",           "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Discover all URLs from a sitemap." },
+    { "name": "website_intelligence",   "category": "web_intel",           "credits": "5 / call",        "billing": "per_call",        "sync": true,  "description": "Flagship all-in-one site report (tech, pixels, emails, social, SSL)." },
+
+    { "name": "search_bing",            "category": "search",              "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Bing SERP search — structured results." },
+    { "name": "search_google_trends",   "category": "search",              "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Google Trends time-series for a keyword." },
+    { "name": "directory_yellowpages",  "category": "search",              "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Yellow Pages directory search." },
+
+    { "name": "youtube_search",         "category": "youtube",             "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Search YouTube videos with metadata." },
+    { "name": "youtube_video",          "category": "youtube",             "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Single-video metadata + optional captions." },
+    { "name": "youtube_channel",        "category": "youtube",             "credits": "1 / call",        "billing": "per_call",        "sync": true,  "description": "Channel metadata." },
+    { "name": "youtube_channel_videos", "category": "youtube",             "credits": "2 / call",        "billing": "per_call",        "sync": true,  "description": "Channel video listing." },
+
+    { "name": "ai_enrich",              "category": "ai",                  "credits": "2 / call (5 for Perplexity)", "billing": "per_call", "sync": true, "description": "LLM completion via OpenAI / Anthropic / Gemini / Perplexity." },
+
+    { "name": "clean_domain",           "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Clean and validate a domain." },
+    { "name": "predict_gender",         "category": "utility",             "credits": "1",               "billing": "per_call",        "sync": true,  "description": "Predict gender from a first name." },
+    { "name": "encode_uri",             "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "URL-encode a string." },
+    { "name": "count_occurrences",      "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Count items in a separator-delimited list." },
+    { "name": "find_sitemap_urls",      "category": "utility",             "credits": "1",               "billing": "per_call",        "sync": true,  "description": "Find sitemap URLs for a domain." },
+    { "name": "normalize_list",         "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Dedupe + trim a list." },
+    { "name": "identify_email_type",    "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Classify an email — work / personal / role / disposable." },
+    { "name": "extract_urls_emails",    "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Extract URLs + emails from free text." },
+    { "name": "normalize_phone",        "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Normalize a phone number to E.164." },
+    { "name": "normalize_company",      "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Normalize a company name." },
+    { "name": "remove_whitespace",      "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Collapse whitespace." },
+    { "name": "format_datetime",        "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Format / convert a datetime." },
+    { "name": "find_redirect",          "category": "utility",             "credits": "1",               "billing": "per_call",        "sync": true,  "description": "Follow redirects / resolve short links." },
+    { "name": "distribute_leads",       "category": "utility",             "credits": "0.5",             "billing": "per_call",        "sync": true,  "description": "Round-robin lead distribution." },
+
+    { "name": "check_usage",            "category": "account",             "credits": "0 (free)",        "billing": "free",            "sync": true,  "description": "Check your credit balance + usage breakdown." }
+  ],
+  "lead_search_filters": {
+    "include_only": [
+      "search",
+      "firstNames",
+      "lastNames",
+      "yearsOfExperience",
+      "yearsAtCurrentCompany",
+      "companySize",
+      "profileLanguages",
+      "recentlyChangedJobs",
+      "salesNavUrl"
+    ],
+    "exclude_capable": {
+      "seniority":                     { "max": 70, "resolution": "resolved"    },
+      "industries":                    { "max": 70, "resolution": "resolved"    },
+      "functions":                     { "max": 30, "resolution": "resolved"    },
+      "locations":                     { "max": 70, "resolution": "passthrough" },
+      "geoIds":                        { "max": 10, "resolution": "geo"         },
+      "currentCompanies":              { "max": 50, "resolution": "passthrough" },
+      "pastCompanies":                 { "max": 50, "resolution": "passthrough" },
+      "currentJobTitles":              { "max": 70, "resolution": "passthrough" },
+      "pastJobTitles":                 { "max": 70, "resolution": "passthrough" },
+      "schools":                       { "max": 50, "resolution": "passthrough" },
+      "companyHeadquarterLocations":   { "max": 70, "resolution": "passthrough" }
+    },
+    "session_rules": {
+      "auto_generated": true,
+      "format": "{api_key_id}-{uuid4}",
+      "client_required_to_echo": true,
+      "max_length": 128,
+      "charset": "a-zA-Z0-9_-",
+      "max_pages": 100
+    }
+  },
+  "decision_tree": {
+    "discover_people": {
+      "ask": "Do I need breadth or precision?",
+      "breadth_cheap":   { "tool": "people_search",  "cost": "0.1/result", "note": "Indexed dataset. Fastest + cheapest for broad discovery." },
+      "precision_live":  { "tool": "profile_search", "cost": "0.1/result", "note": "Live LinkedIn string match. Good for exact name/title/company hits." },
+      "targeted_complex":{ "tool": "lead_search",    "cost": "0.5/result", "note": "30+ filters, include+exclude, sessionId pagination. Use when cheap tools can't express the ICP." }
+    },
+    "find_email": {
+      "single_person":   { "tool": "email_finder",   "cost": "≤2 credits", "note": "Synchronous waterfall. Use for 1–5 people." },
+      "batch":           { "tool": "find_emails",    "cost": "2 per success", "note": "Async batch. Use for 10+ people. Follow with check_email_finding." }
+    },
+    "verify_email": {
+      "single":          { "tool": "email_verifier", "cost": "≤1 credit",  "note": "Waterfall, single call." },
+      "batch":           { "tool": "verify_emails",  "cost": "0.5 each",   "note": "Async, up to 1000. Follow with check_email_verification." }
+    }
+  }
+}

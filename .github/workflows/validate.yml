@@ -1,0 +1,71 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly catalog refresh — Monday 08:00 UTC. Commits if the MCP surface
+    # changed; the validator must still pass afterwards.
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq + bash (already present, sanity check)
+        run: |
+          bash --version | head -1
+          curl --version | head -1
+          jq --version
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Make bin/* executable
+        run: chmod +x bin/* setup
+
+      - name: Run preflight (no network)
+        run: ./bin/texau-skills-preflight
+
+      - name: Validate skills
+        run: node scripts/validate-skills.mjs
+
+  refresh-catalog:
+    # Only on the weekly schedule — doesn't run on PRs.
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make bin/* executable
+        run: chmod +x bin/*
+
+      - name: Refresh catalog from live MCP
+        env:
+          TEXAU_API_KEY: ${{ secrets.TEXAU_API_KEY_CI }}
+        run: |
+          ./bin/texau-skills-sync || echo "sync failed — leaving snapshot in place"
+
+      - name: Validate post-refresh
+        run: node scripts/validate-skills.mjs
+
+      - name: Commit if catalog changed
+        run: |
+          if git diff --quiet _lib/mcp-catalog.json _lib/filters-catalog.json; then
+            echo "no changes"
+            exit 0
+          fi
+          git config user.name  "texau-gtm-skills-bot"
+          git config user.email "bot@texau.com"
+          git add _lib/mcp-catalog.json _lib/filters-catalog.json
+          git commit -m "chore: weekly catalog refresh"
+          git push

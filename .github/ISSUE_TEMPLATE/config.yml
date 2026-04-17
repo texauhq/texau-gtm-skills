@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: TexAu support (API key, credits, billing)
+    url: mailto:support@texau.com
+    about: For anything about your TexAu account, API key, or credit balance.
+  - name: Security disclosure
+    url: mailto:security@texau.com
+    about: Report a security issue privately (see SECURITY.md).
+  - name: TexAu MCP server
+    url: https://mcp.texau.com
+    about: Issues with the MCP server itself (not this skills pack).

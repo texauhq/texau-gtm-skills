@@ -1,0 +1,177 @@
+#!/usr/bin/env bash
+# Usage: texau-skills-sync [--age | --check | --help]
+#
+# Resolution order: public catalog → MCP tools/list (needs TEXAU_API_KEY) → keep cache.
+# Idempotent; writes atomically.
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+LIB="$ROOT/_lib"
+CATALOG="$LIB/mcp-catalog.json"
+FILTERS="$LIB/filters-catalog.json"
+STATE_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+LAST_SYNC="$STATE_DIR/.last-sync"
+MCP_ORIGIN="${TEXAU_MCP_ORIGIN:-https://mcp.texau.com}"
+API_ORIGIN="${TEXAU_API_ORIGIN:-https://v3-api.texau.com}"
+VERBOSE="${TEXAU_SKILLS_VERBOSE:-0}"
+
+mkdir -p "$STATE_DIR"
+
+log()  { [ "$VERBOSE" = "1" ] && echo "[sync] $*" >&2 || true; }
+die()  { echo "[sync] error: $*" >&2; exit 1; }
+warn() { echo "[sync] warn: $*" >&2; }
+
+need() { command -v "$1" >/dev/null 2>&1 || die "missing dependency: $1"; }
+need curl
+need jq
+
+atomic_write() {
+  local dest="$1" tmp
+  tmp="$(mktemp "${dest}.XXXXXX")"
+  cat > "$tmp"
+  jq empty "$tmp" >/dev/null 2>&1 || { rm -f "$tmp"; die "produced invalid JSON for $dest"; }
+  mv "$tmp" "$dest"
+}
+
+try_public_catalog() {
+  log "GET $MCP_ORIGIN/catalog.json"
+  local body code
+  body="$(curl -fsS -w $'\n%{http_code}' --max-time 10 "$MCP_ORIGIN/catalog.json" 2>/dev/null || true)"
+  code="${body##*$'\n'}"
+  body="${body%$'\n'*}"
+  if [ "$code" = "200" ] && echo "$body" | jq -e '.tools | length > 0' >/dev/null 2>&1; then
+    echo "$body" | atomic_write "$CATALOG"
+    return 0
+  fi
+  log "public catalog unavailable (code=$code)"
+  return 1
+}
+
+try_mcp_tools_list() {
+  [ -n "${TEXAU_API_KEY:-}" ] || { log "no TEXAU_API_KEY; skipping MCP fallback"; return 1; }
+  log "POST $MCP_ORIGIN/mcp tools/list"
+
+  local body code
+  body="$(curl -fsS -w $'\n%{http_code}' --max-time 15 \
+    -X POST "$MCP_ORIGIN/mcp" \
+    -H "x-api-key: $TEXAU_API_KEY" \
+    -H "content-type: application/json" \
+    -H "accept: application/json, text/event-stream" \
+    -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' 2>/dev/null || true)"
+  code="${body##*$'\n'}"
+  body="${body%$'\n'*}"
+  [ "$code" = "200" ] || { warn "tools/list HTTP $code"; return 1; }
+
+  # Response may arrive as plain JSON or as an SSE "data: {...}" frame.
+  local json
+  json="$(echo "$body" | awk '/^data: /{sub(/^data: /,""); print; exit} /^\{/{print; exit}')"
+  [ -z "$json" ] && json="$body"
+
+  echo "$json" | jq -e '.result.tools' >/dev/null 2>&1 \
+    || { warn "unexpected MCP response shape"; return 1; }
+
+  local now
+  now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+  # Merge rule: curated fields win for known tools; new tools land as "uncategorized"
+  # so the next contributor adds category + credits + billing metadata.
+  jq --arg ts "$now" \
+     --arg by "mcp-tools-list @ $MCP_ORIGIN" \
+     --slurpfile existing "$CATALOG" \
+     '
+     . as $live
+     | ($existing[0].tools // []) as $curated
+     | ($live.result.tools | map({name: .name, description: .description})) as $live_tools
+     | ($curated | map(.name)) as $known
+     | {
+         "$schema":    "./mcp-catalog.schema.json",
+         generated_at: $ts,
+         generated_by: $by,
+         mcp_endpoint: ($existing[0].mcp_endpoint // "https://mcp.texau.com/mcp"),
+         api_base:     ($existing[0].api_base     // "https://v3-api.texau.com/api/v1"),
+         version:      ($existing[0].version      // "unknown"),
+         tools:
+           ($curated | map(. as $c
+             | ($live_tools | map(select(.name == $c.name)) | first) as $l
+             | if $l then . + {description: ($l.description // .description)} else . end))
+           +
+           ($live_tools | map(select(.name as $n | ($known | index($n)) == null)
+             | {name: .name, category: "uncategorized", credits: "see /check_usage", billing: "per_call", sync: true, description: .description})),
+         lead_search_filters: ($existing[0].lead_search_filters // {}),
+         decision_tree:       ($existing[0].decision_tree       // {})
+       }
+     ' <<<"null" | atomic_write "$CATALOG"
+  return 0
+}
+
+try_refresh_filters() {
+  [ -n "${TEXAU_API_KEY:-}" ] || return 0
+  log "GET $API_ORIGIN/api/v1/search_reference_data"
+  local body code now
+  body="$(curl -fsS -w $'\n%{http_code}' --max-time 10 \
+    -H "x-api-key: $TEXAU_API_KEY" \
+    "$API_ORIGIN/api/v1/search_reference_data" 2>/dev/null || true)"
+  code="${body##*$'\n'}"
+  body="${body%$'\n'*}"
+  [ "$code" = "200" ] || { warn "filters refresh HTTP $code — keeping cached"; return 0; }
+  now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  echo "$body" | jq --arg ts "$now" '. + {generated_at: $ts}' | atomic_write "$FILTERS"
+}
+
+main() {
+  if try_public_catalog; then
+    :
+  elif try_mcp_tools_list; then
+    :
+  else
+    warn "all live sources failed; cached snapshot is still in place."
+    warn "set TEXAU_API_KEY=<key> for the MCP fallback, or enable the public /catalog.json endpoint."
+  fi
+  try_refresh_filters
+  date -u +%Y-%m-%dT%H:%M:%SZ > "$LAST_SYNC"
+  echo "[sync] catalog:   $CATALOG"
+  echo "[sync] filters:   $FILTERS"
+  echo "[sync] last-sync: $(cat "$LAST_SYNC")"
+}
+
+epoch_of() {
+  date -j -f "%Y-%m-%dT%H:%M:%SZ" "$1" +%s 2>/dev/null \
+    || date -d "$1" +%s 2>/dev/null \
+    || echo 0
+}
+
+case "${1:-}" in
+  -h|--help|help)
+    cat <<EOF
+texau-skills-sync — refresh MCP catalog snapshots.
+
+Usage:
+  texau-skills-sync            Run sync. Reads \$TEXAU_API_KEY if set.
+  texau-skills-sync --age      Print age (seconds) of last successful sync.
+  texau-skills-sync --check    Exit 0 if fresh (<7d), 1 if stale.
+
+Env:
+  TEXAU_API_KEY         Required only if public catalog is unreachable.
+  TEXAU_MCP_ORIGIN      Default: https://mcp.texau.com
+  TEXAU_API_ORIGIN      Default: https://v3-api.texau.com
+  TEXAU_SKILLS_HOME     State dir (default: ~/.texau-skills)
+  TEXAU_SKILLS_VERBOSE  Set to 1 for verbose logs.
+EOF
+    exit 0
+    ;;
+  --age)
+    [ -f "$LAST_SYNC" ] || { echo "never"; exit 0; }
+    echo "$(( $(date +%s) - $(epoch_of "$(cat "$LAST_SYNC")") ))"
+    exit 0
+    ;;
+  --check)
+    [ -f "$LAST_SYNC" ] || exit 1
+    age=$(( $(date +%s) - $(epoch_of "$(cat "$LAST_SYNC")") ))
+    [ "$age" -le $((7 * 24 * 3600)) ]
+    exit $?
+    ;;
+  *)
+    main
+    ;;
+esac

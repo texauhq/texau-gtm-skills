@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Usage:
+#   texau-skills-config get <key>
+#   texau-skills-config set <key> <value>
+#   texau-skills-config unset <key>
+#   texau-skills-config list
+#
+# Known keys (others are accepted but may be unused):
+#   proactive       true|false    auto-invoke skills from intent (default: true)
+#   sync_on_start   true|false    auto-run sync when catalog is stale (default: true)
+#   default_mode    fast|deep
+#   default_batch   <int>
+#
+# Storage: $TEXAU_SKILLS_HOME/config (default ~/.texau-skills/config), KEY=VALUE per line.
+
+set -eu
+
+HOME_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+CFG="$HOME_DIR/config"
+mkdir -p "$HOME_DIR"
+touch "$CFG"
+
+key_valid() {
+  case "$1" in
+    [a-zA-Z_][a-zA-Z0-9_]*) return 0 ;;
+    *) echo "invalid key: $1" >&2; return 1 ;;
+  esac
+}
+
+cmd="${1:-list}"
+shift || true
+
+case "$cmd" in
+  get)
+    [ $# -eq 1 ] || { echo "usage: get <key>" >&2; exit 2; }
+    key_valid "$1" || exit 2
+    awk -F= -v k="$1" '$1==k {print substr($0, index($0,"=")+1); found=1} END {exit found?0:1}' "$CFG" || true
+    ;;
+  set)
+    [ $# -eq 2 ] || { echo "usage: set <key> <value>" >&2; exit 2; }
+    key_valid "$1" || exit 2
+    tmp="$(mktemp)"
+    awk -F= -v k="$1" '$1!=k' "$CFG" > "$tmp"
+    echo "$1=$2" >> "$tmp"
+    mv "$tmp" "$CFG"
+    ;;
+  unset)
+    [ $# -eq 1 ] || { echo "usage: unset <key>" >&2; exit 2; }
+    key_valid "$1" || exit 2
+    tmp="$(mktemp)"
+    awk -F= -v k="$1" '$1!=k' "$CFG" > "$tmp"
+    mv "$tmp" "$CFG"
+    ;;
+  list)
+    cat "$CFG"
+    ;;
+  *)
+    echo "usage: texau-skills-config {get|set|unset|list} [key] [value]" >&2
+    exit 2
+    ;;
+esac
