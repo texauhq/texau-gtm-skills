@@ -116,7 +116,7 @@ See [scheduled-workflow](./skills/scheduled-workflow/SKILL.md) for the full set 
 ### Install
 
 ```bash
-git clone --depth 1 https://github.com/texau/texau-gtm-skills.git \
+git clone --depth 1 https://github.com/texauhq/texau-gtm-skills.git \
   ~/.claude/skills/texau-gtm-skills
 cd ~/.claude/skills/texau-gtm-skills
 ./setup
