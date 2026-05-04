@@ -1,6 +1,6 @@
 ---
 name: texau-gtm
-version: 1.0.0
+version: 1.2.0
 description: |
   Entry point for the TexAu GTM skill pack. Routes GTM intents (prospecting, enrichment,
   email finding/verification, account research, pre-meeting briefings, list hygiene,
@@ -79,6 +79,8 @@ Match the user's intent and invoke the matching skill. When in doubt, ask (don't
 | User intent (examples) | Sub-skill |
 |---|---|
 | "Build me a list of VP Sales at SaaS companies 200–500 in NYC" / "Find prospects that match…" | **[build-prospect-list](../build-prospect-list/SKILL.md)** |
+| "Find all dentists in Austin" / "list of restaurants near…" / "scrape Google Maps for…" / hyperlocal SMB sourcing | **[local-business-prospecting](../local-business-prospecting/SKILL.md)** |
+| "Monitor these accounts for buying signals" / "alert me when X starts hiring" / "weekly trigger digest" / ABM intent monitoring | **[signal-monitor](../signal-monitor/SKILL.md)** |
 | "Enrich this LinkedIn URL" + "find their email" + "verify it" (any 2 of these chained) | **[enrich-and-verify](../enrich-and-verify/SKILL.md)** |
 | "Research Acme Corp" / "Who are the decision makers at X" / "Tell me about this company" | **[account-research](../account-research/SKILL.md)** |
 | "I have a meeting with X tomorrow" / "Brief me on this person" / "Pre-meeting prep" | **[pre-meeting-briefing](../pre-meeting-briefing/SKILL.md)** |

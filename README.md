@@ -9,7 +9,7 @@
   |_|\___/_/\_\/_/   \_\__,_|  \____| |_| |_|  |_| |____/|_|\_\_|_|_|___/
 ```
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![14 skills](https://img.shields.io/badge/skills-14-blue)](./skills) [![55 MCP tools](https://img.shields.io/badge/MCP%20tools-55-green)](https://mcp.texau.com) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.texau.com) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
 
 **Anyone can be a GTM engineer.** Build prospecting, enrichment, competitive intelligence, account research, pre-meeting briefings, list hygiene, cold-outreach sequences, CRM sync, and evidence scoring — inside Claude. One credit pool, 50+ real-time data providers, zero SaaS subscriptions, and Claude's scheduling feature turns any of it into a self-running workflow.
 
