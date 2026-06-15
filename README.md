@@ -2,11 +2,11 @@
 
 
 ```text
- _____             _            ____ _____ __  __   ____  _    _ _ _
-|_   _|____  __   / \  _   _   / ___|_   _|  \/  | / ___|| | _(_) | |___
-  | |/ _ \ \/ /  / _ \| | | | | |  _  | | | |\/| | \___ \| |/ / | | / __|
-  | |  __/>  <  / ___ \ |_| | | |_| | | | | |  | |  ___) |   <| | | \__ \
-  |_|\___/_/\_\/_/   \_\__,_|  \____| |_| |_|  |_| |____/|_|\_\_|_|_|___/
+ ____  _      _        _    ____ ___    ____ _____ __  __   ____  _    _ _ _     
+|  _ \(_) ___| |__    / \  |  _ \_ _|  / ___|_   _|  \/  | / ___|| | _(_) | |___ 
+| |_) | |/ __| '_ \  / _ \ | |_) | |  | |  _  | | | |\/| | \___ \| |/ / | | / __|
+|  _ <| | (__| | | |/ ___ \|  __/| |  | |_| | | | | |  | |  ___) |   <| | | \__ \
+|_| \_\_|\___|_| |_/_/   \_\_|  |___|  \____| |_| |_|  |_| |____/|_|\_\_|_|_|___/
 ```
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.richapi.ai) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
