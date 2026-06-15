@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: richapi support (API key, credits, billing)
-    url: mailto:support@richapi.com
+    url: mailto:support@richapi.ai
     about: For anything about your richapi account, API key, or credit balance.
   - name: Security disclosure
-    url: mailto:security@richapi.com
+    url: mailto:security@richapi.ai
     about: Report a security issue privately (see SECURITY.md).
-  - name: richapi MCP server
-    url: https://mcp.richapi.com
+  - name: Richapi MCP server
+    url: https://mcp.richapi.ai
     about: Issues with the MCP server itself (not this skills pack).

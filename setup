@@ -78,8 +78,8 @@ cat <<EOF
 Next steps:
   1. Append the block to your CLAUDE.md (global or per-repo):
        cat $BLOCK_FILE >> ~/.claude/CLAUDE.md
-  2. Connect the richapi MCP in your client:
-       URL:    https://mcp.richapi.com/mcp
+  2. Connect the Richapi MCP in your client:
+       URL:    https://mcp.richapi.ai/mcp
        Header: x-api-key: <your richapi API key>
   3. Try it — ask Claude: "Build me a list of 20 VP Sales at SaaS companies."
 

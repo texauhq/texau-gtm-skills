@@ -26,12 +26,12 @@ The catalog is a JSON snapshot of the richapi MCP's tool surface. It is the **on
 ### Resolution order (in `bin/richapi-skills-sync`)
 
 ```
-1.  GET https://mcp.richapi.com/catalog.json         (public, no auth — preferred)
-2.  POST https://mcp.richapi.com/mcp tools/list      (requires richapi_API_KEY)
+1.  GET https://mcp.richapi.ai/catalog.json         (public, no auth — preferred)
+2.  POST https://mcp.richapi.ai/mcp tools/list      (requires richapi_API_KEY)
 3.  (both failed) leave shipped snapshot in place  (non-fatal — warns user)
 ```
 
-Layer 1 doesn't exist yet in the MCP server. It's a 10-line endpoint addition to `richapi-v3-apis/mcp-server/src/worker.ts` and unlocks zero-config auto-updates. Shipping this unblocks:
+Layer 1 doesn't exist yet in the MCP server. It's a 10-line endpoint addition to `richapi-apis/mcp-server/src/worker.ts` and unlocks zero-config auto-updates. Shipping this unblocks:
 - Skills auto-refresh on every session start with no `richapi_API_KEY` ceremony.
 - Users who read-only the pack (no MCP connection yet) still get fresh data.
 - CDN caching means the cost of the call is effectively zero.

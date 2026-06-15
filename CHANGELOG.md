@@ -71,4 +71,4 @@ Initial public release.
 
 - Claude Code / Desktop / Cursor / Windsurf / any MCP-aware client
 - Bash, curl, jq
-- A richapi API key ([enrich.richapi.com](https://enrich.richapi.com))
+- A richapi API key ([enrich.richapi.ai](https://enrich.richapi.ai))

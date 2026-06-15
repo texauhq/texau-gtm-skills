@@ -1,4 +1,4 @@
-# richapi GTM Skills
+# Richapi GTM Skills
 
 
 ```text
@@ -9,7 +9,7 @@
   |_|\___/_/\_\/_/   \_\__,_|  \____| |_| |_|  |_| |____/|_|\_\_|_|_|___/
 ```
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.richapi.com) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.richapi.ai) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
 
 **Anyone can be a GTM engineer.** Build prospecting, enrichment, competitive intelligence, account research, pre-meeting briefings, list hygiene, cold-outreach sequences, CRM sync, and evidence scoring — inside Claude. One credit pool, 50+ real-time data providers, zero SaaS subscriptions, and Claude's scheduling feature turns any of it into a self-running workflow.
 
@@ -19,8 +19,8 @@
 
 ## Get started — free 500 credits for open-source users
 
-1. **Create an account and grab your API key:** [enrich.richapi.com](https://enrich.richapi.com)
-2. **Trying this from GitHub? Email [support@richapi.com](mailto:support@richapi.com)** with a note that you found this on GitHub (or linked to your open-source project). Mention this pack and we'll credit **500 free test credits** to your account — enough for a few full prospecting + enrichment runs to see if it fits your workflow before you spend a dollar.
+1. **Create an account and grab your API key:** [enrich.richapi.ai](https://enrich.richapi.ai)
+2. **Trying this from GitHub? Email [support@richapi.ai](mailto:support@richapi.ai)** with a note that you found this on GitHub (or linked to your open-source project). Mention this pack and we'll credit **500 free test credits** to your account — enough for a few full prospecting + enrichment runs to see if it fits your workflow before you spend a dollar.
 3. **Install the pack** (30 seconds — see below) and ask Claude to do its first GTM run.
 
 No card on file. No trial timer. We want you to try it with real data.
@@ -111,7 +111,7 @@ See [scheduled-workflow](./skills/scheduled-workflow/SKILL.md) for the full set 
 
 - Claude Code, Claude Desktop, Cursor, Windsurf, or any MCP-compatible client
 - `bash`, `curl`, `jq`
-- A **richapi API key** — [enrich.richapi.com](https://enrich.richapi.com) *(open-source users: mention this repo to [support@richapi.com](mailto:support@richapi.com) for 500 free credits)*
+- A **Richapi API key** — [enrich.richapi.ai](https://enrich.richapi.ai) *(open-source users: mention this repo to [support@richapi.ai](mailto:support@richapi.ai) for 500 free credits)*
 
 ### Install
 
@@ -124,20 +124,20 @@ cd ~/.claude/skills/richapi-gtm-skills
 
 The installer writes a routing block you paste into `~/.claude/CLAUDE.md`. That's it.
 
-### Connect the richapi MCP
+### Connect the Richapi MCP
 
 ```json
 {
   "mcpServers": {
     "richapi": {
-      "url": "https://mcp.richapi.com/mcp",
+      "url": "https://mcp.richapi.ai/mcp",
       "headers": { "x-api-key": "your-richapi-api-key" }
     }
   }
 }
 ```
 
-Setup for every client is in the [richapi MCP README](../richapi-v3-apis/mcp-server/README.md).
+Setup for every client is in the [Richapi MCP README](../richapi-apis/mcp-server/README.md).
 
 ### Try it
 
@@ -173,7 +173,7 @@ Watch the router fire, the cost ceiling land, the tools chain, and the result fo
                                                    │
                                                    ▼
                   ┌────────────────────────────────────────────────────────────────────────┐
-                  │  richapi MCP  —  https://mcp.richapi.com/mcp  (auth: x-api-key)            │
+                  │  Richapi MCP  —  https://mcp.richapi.ai/mcp  (auth: x-api-key)            │
                   │  55 tools across LinkedIn / email / web / search / YouTube / AI / ...  │
                   │  50+ data providers behind the scenes; one credit pool for all         │
                   └────────────────────────────────────────────────────────────────────────┘
@@ -191,7 +191,7 @@ Every skill reads [`_lib/mcp-catalog.json`](./_lib/mcp-catalog.json) — a snaps
 
 ### Three layers of freshness
 
-1. **Public catalog** (`https://mcp.richapi.com/catalog.json`) — no auth, preferred. *(Endpoint is on the roadmap; until it lands, layer 2 kicks in.)*
+1. **Public catalog** (`https://mcp.richapi.ai/catalog.json`) — no auth, preferred. *(Endpoint is on the roadmap; until it lands, layer 2 kicks in.)*
 2. **MCP `tools/list`** — live tool catalog using your `richapi_API_KEY`, merged with curated metadata.
 3. **Shipped snapshot** — always in the repo as the last-resort fallback.
 

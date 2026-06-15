@@ -1,10 +1,10 @@
-# richapi GTM Skills — development
+# Richapi GTM Skills — development
 
 > This file is for **contributors** to `richapi-gtm-skills`. If you're a user, read [README.md](./README.md) instead.
 
 ## What this pack is
 
-An opinionated Claude Skills layer on top of the richapi MCP. The MCP gives Claude the *hands* (tools + schemas); this pack gives Claude the *brain* (when to use which tool, in what order, under what cost budget).
+An opinionated Claude Skills layer on top of the R      ichapi MCP. The MCP gives Claude the *hands* (tools + schemas); this pack gives Claude the *brain* (when to use which tool, in what order, under what cost budget).
 
 ## Ground rules
 
@@ -111,5 +111,5 @@ richapi-gtm-skills/
 We do NOT write Node/TypeScript unit tests for skill content. Tests fail to catch what matters (instructive quality, cost accuracy, routing sanity). Instead:
 
 - `scripts/validate-skills.mjs` — catches *mechanical* issues (missing frontmatter, broken markdown links, references to non-existent tools).
-- Every PR that adds or changes a playbook must include an **example session transcript** in the PR body showing the skill in action against a real richapi MCP.
+- Every PR that adds or changes a playbook must include an **example session transcript** in the PR body showing the skill in action against a real Richapi MCP.
 - Periodic eval: a contributor picks 3 random plain-English GTM asks, runs them through Claude Code + this pack, and grades the outputs on (a) tool choice, (b) credit efficiency, (c) output quality.

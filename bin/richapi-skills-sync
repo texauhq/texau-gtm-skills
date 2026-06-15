@@ -12,8 +12,8 @@ CATALOG="$LIB/mcp-catalog.json"
 FILTERS="$LIB/filters-catalog.json"
 STATE_DIR="${richapi_SKILLS_HOME:-$HOME/.richapi-skills}"
 LAST_SYNC="$STATE_DIR/.last-sync"
-MCP_ORIGIN="${richapi_MCP_ORIGIN:-https://mcp.richapi.com}"
-API_ORIGIN="${richapi_API_ORIGIN:-https://v3-api.richapi.com}"
+MCP_ORIGIN="${richapi_MCP_ORIGIN:-https://mcp.richapi.ai}"
+API_ORIGIN="${richapi_API_ORIGIN:-https://api.richapi.ai}"
 VERBOSE="${richapi_SKILLS_VERBOSE:-0}"
 
 mkdir -p "$STATE_DIR"
@@ -88,8 +88,8 @@ try_mcp_tools_list() {
          "$schema":    "./mcp-catalog.schema.json",
          generated_at: $ts,
          generated_by: $by,
-         mcp_endpoint: ($existing[0].mcp_endpoint // "https://mcp.richapi.com/mcp"),
-         api_base:     ($existing[0].api_base     // "https://v3-api.richapi.com/api/v1"),
+         mcp_endpoint: ($existing[0].mcp_endpoint // "https://mcp.richapi.ai/mcp"),
+         api_base:     ($existing[0].api_base     // "https://api.richapi.ai/api/v1"),
          version:      ($existing[0].version      // "unknown"),
          tools:
            ($curated | map(. as $c
@@ -153,8 +153,8 @@ Usage:
 
 Env:
   richapi_API_KEY         Required only if public catalog is unreachable.
-  richapi_MCP_ORIGIN      Default: https://mcp.richapi.com
-  richapi_API_ORIGIN      Default: https://v3-api.richapi.com
+  richapi_MCP_ORIGIN      Default: https://mcp.richapi.ai
+  richapi_API_ORIGIN      Default: https://api.richapi.ai
   richapi_SKILLS_HOME     State dir (default: ~/.richapi-skills)
   richapi_SKILLS_VERBOSE  Set to 1 for verbose logs.
 EOF

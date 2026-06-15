@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "richapi MCP Catalog",
-  "description": "Machine-readable snapshot of the richapi MCP tool surface. Consumed by every GTM skill to produce current, cost-accurate tool selections.",
+  "title": "Richapi MCP Catalog",
+  "description": "Machine-readable snapshot of the Richapi MCP tool surface. Consumed by every GTM skill to produce current, cost-accurate tool selections.",
   "type": "object",
   "required": ["generated_at", "mcp_endpoint", "api_base", "tools"],
   "properties": {

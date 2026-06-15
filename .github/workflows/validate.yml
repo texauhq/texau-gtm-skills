@@ -65,7 +65,7 @@ jobs:
             exit 0
           fi
           git config user.name  "richapi-gtm-skills-bot"
-          git config user.email "bot@richapi.com"
+          git config user.email "bot@richapi.ai"
           git add _lib/mcp-catalog.json _lib/filters-catalog.json
           git commit -m "chore: weekly catalog refresh"
           git push

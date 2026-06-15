@@ -26,7 +26,7 @@ triggers:
 
 # crm-export
 
-Take a richapi result set and hand the user exactly what their CRM's importer wants. This skill is for **one-time or low-frequency file imports** — CSV, NDJSON, copy-paste. If the user needs a recurring API sync, custom field architecture, lifecycle-stage mapping, or is choosing a CRM, route to [crm-sync-expert](../crm-sync-expert/SKILL.md) instead.
+Take a Richapi result set and hand the user exactly what their CRM's importer wants. This skill is for **one-time or low-frequency file imports** — CSV, NDJSON, copy-paste. If the user needs a recurring API sync, custom field architecture, lifecycle-stage mapping, or is choosing a CRM, route to [crm-sync-expert](../crm-sync-expert/SKILL.md) instead.
 
 ## Preamble
 

@@ -2,8 +2,8 @@
   "$schema": "./mcp-catalog.schema.json",
   "generated_at": "2026-05-04T00:00:00Z",
   "generated_by": "snapshot (initial)",
-  "mcp_endpoint": "https://mcp.richapi.com/mcp",
-  "api_base": "https://v3-api.richapi.com/api/v1",
+  "mcp_endpoint": "https://mcp.richapi.ai/mcp",
+  "api_base": "https://api.richapi.ai/api/v1",
   "version": "1.2.0",
   "tools": [
     {

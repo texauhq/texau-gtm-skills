@@ -1,7 +1,7 @@
 {
   "name": "@richapi/gtm-skills",
   "version": "1.0.0",
-  "description": "Claude Skills pack that turns the richapi MCP into an opinionated GTM workflow — prospecting, enrichment, account research, competitive intel, list hygiene, and CRM export. Self-updating catalog; works with Claude Code, Claude Desktop, Cursor.",
+  "description": "Claude Skills pack that turns the Richapi MCP into an opinionated GTM workflow — prospecting, enrichment, account research, competitive intel, list hygiene, and CRM export. Self-updating catalog; works with Claude Code, Claude Desktop, Cursor.",
   "private": false,
   "bin": {
     "richapi-skills-sync": "bin/richapi-skills-sync",
@@ -54,7 +54,7 @@
   "license": "MIT",
   "author": {
     "name": "richapi",
-    "url": "https://richapi.com"
+    "url": "https://richapi.ai"
   },
   "engines": {
     "node": ">=18"

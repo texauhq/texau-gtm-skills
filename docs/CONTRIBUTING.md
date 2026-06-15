@@ -138,4 +138,4 @@ MCP changes a credit cost:
 
 ## Questions
 
-Open a GitHub issue with the `question` label. Or email gtm-skills@richapi.com.
+Open a GitHub issue with the `question` label. Or email gtm-skills@richapi.ai.

@@ -56,7 +56,7 @@ else
 fi
 
 if command -v curl >/dev/null 2>&1 && \
-   curl -fsS --max-time 2 -o /dev/null "${richapi_MCP_ORIGIN:-https://mcp.richapi.com}/health" 2>/dev/null; then
+   curl -fsS --max-time 2 -o /dev/null "${richapi_MCP_ORIGIN:-https://mcp.richapi.ai}/health" 2>/dev/null; then
   echo "NET: online"
 else
   echo "NET: offline"

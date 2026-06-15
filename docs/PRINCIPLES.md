@@ -4,7 +4,7 @@ These are the non-negotiables for every skill in this pack. If a skill violates 
 
 ## 1. The MCP is the source of truth
 
-Tool names, credit costs, parameter limits, and async/sync behavior live in the richapi MCP. The catalog mirrors it. Skills read the catalog. They never duplicate this state.
+Tool names, credit costs, parameter limits, and async/sync behavior live in the Richapi MCP. The catalog mirrors it. Skills read the catalog. They never duplicate this state.
 
 **Consequence:** if a number appears in a skill without a reference to `_lib/mcp-catalog.json`, that number is a bug in the making. Someone will change the MCP, and the skill will silently go stale.
 
@@ -60,7 +60,7 @@ Reversing this order pays 0.5 credits to verify junk that was going to be droppe
 
 ## 8. Hard failures cost nothing
 
-richapi's waterfall endpoints **do not charge on hard-fail** (all providers unreachable). This is a rare gift — skills should retry once after a short delay before surfacing the error. Never bake in aggressive retry loops that could burn credits elsewhere.
+Richapi's waterfall endpoints **do not charge on hard-fail** (all providers unreachable). This is a rare gift — skills should retry once after a short delay before surfacing the error. Never bake in aggressive retry loops that could burn credits elsewhere.
 
 ## 9. The router, not the sub-skill, reads the big catalog
 
@@ -108,6 +108,6 @@ If a user interrupts mid-task, stop immediately. Never silently continue a batch
 
 Do the whole job — not a half-done approximation — every time. Skipping steps to look fast produces brittle output that the user has to redo themselves, which is the worst outcome.
 
-But richapi credits aren't free, and the user's budget is finite. So the second half of completeness is transparency: say what the full path will cost *before* you start, and let the user choose whether they want everything or just a slice.
+But Richapi credits aren't free, and the user's budget is finite. So the second half of completeness is transparency: say what the full path will cost *before* you start, and let the user choose whether they want everything or just a slice.
 
 Silent thoroughness is a trap. Loud thoroughness, with a price tag attached, is the job.

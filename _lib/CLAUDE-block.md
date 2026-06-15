@@ -1,4 +1,4 @@
-## richapi GTM Skills
+## Richapi GTM Skills
 
 This environment has `richapi-gtm-skills` installed. When the user mentions anything
 GTM-related — LinkedIn leads, prospect lists, emails, enrichment, ICPs, account

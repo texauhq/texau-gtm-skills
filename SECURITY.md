@@ -8,7 +8,7 @@ Only the latest minor release on `main` receives fixes. v1.x.
 
 **Do not open a public GitHub issue for security reports.**
 
-Email **security@richapi.com** with:
+Email **security@richapi.ai** with:
 
 - A description of the issue
 - Steps to reproduce (or a proof-of-concept)
@@ -34,6 +34,6 @@ This repo is a collection of Markdown skill files and three small Bash scripts p
 
 ## Credentials
 
-- Your richapi API key stays on your machine. This pack never transmits it to any server except `mcp.richapi.com` and `v3-api.richapi.com`.
+- Your richapi API key stays on your machine. This pack never transmits it to any server except `mcp.richapi.ai` and `api.richapi.ai`.
 - If you rotate your key, the preflight and sync scripts will pick up the new value on the next invocation — no config change needed.
 - The GitHub Actions workflow in this repo uses `secrets.richapi_API_KEY_CI`, a dedicated CI-only key scoped for the weekly catalog refresh. Rotate it independently of your personal key.

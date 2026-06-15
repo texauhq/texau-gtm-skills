@@ -5,7 +5,7 @@ description: |
   Entry point for the richapi GTM skill pack. Routes GTM intents (prospecting, enrichment,
   email finding/verification, account research, pre-meeting briefings, list hygiene,
   competitive intel, CRM export, credit optimization) to specialized sub-skills that call
-  the richapi MCP at mcp.richapi.com. Proactively invoke whenever the user mentions LinkedIn
+  the richapi MCP at mcp.richapi.ai. Proactively invoke whenever the user mentions LinkedIn
   leads, prospect lists, email finding/verification, enrichment, ICPs, account research,
   company intelligence, cold outbound, or CRM imports.
 allowed-tools:
@@ -54,8 +54,8 @@ echo "SYNC_ON_START: $_SYNC_ON_START"
 |---|---|---|
 | `CATALOG_OK: no` | Catalog file missing or corrupt | Block — run `richapi-skills-sync` and tell the user. Do not proceed. |
 | `CATALOG_STALE: yes` + `SYNC_ON_START: true` + `NET: online` | Snapshot > 7d old and we can refresh | Run `~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-sync` silently in the background. Proceed with cached catalog while it runs. |
-| `CATALOG_STALE: yes` + `NET: offline` | Stale and can't refresh | Warn the user once: "Catalog is N days old and I can't reach mcp.richapi.com — I'll use the cached version. Credits/tool names may be slightly off." Then proceed. |
-| `API_KEY_SET: no` | `richapi_API_KEY` env var missing | If any sub-skill will call a paid tool, tell the user to set it or connect the MCP in their client. |
+| `CATALOG_STALE: yes` + `NET: offline` | Stale and can't refresh | Warn the user once: "Catalog is N days old and I can't reach mcp.richapi.ai — I'll use the cached version. Credits/tool names may be slightly off." Then proceed. |
+| `API_KEY_SET: no` | `Richapi_API_KEY` env var missing | If any sub-skill will call a paid tool, tell the user to set it or connect the MCP in their client. |
 | `UPGRADE: <ver>` (non-`none`) | New skills version available | At session end, offer: "richapi-gtm-skills v{UPGRADE} is out (you're on v{SKILLS_VERSION}). Run `cd ~/.claude/skills/richapi-gtm-skills && git pull` when you have a minute." Do not interrupt current work. |
 | `PROACTIVE: false` | User opted out | Do not auto-invoke sub-skills. Surface suggestions but wait for confirmation. |
 
@@ -102,7 +102,7 @@ Match the user's intent and invoke the matching skill. When in doubt, ask (don't
 
 ## What this pack does NOT do
 
-- It does not call the richapi API directly — all calls go through the MCP tool layer that Claude already has access to (via the connected `mcp.richapi.com` server).
+- It does not call the richapi API directly — all calls go through the MCP tool layer that Claude already has access to (via the connected `mcp.richapi.ai` server).
 - It does not store customer data. Everything is session-scoped.
 - It does not replace the MCP — the MCP provides tool *execution*; skills provide tool *selection and orchestration*.
 

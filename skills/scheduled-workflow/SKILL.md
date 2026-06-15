@@ -231,4 +231,4 @@ After scheduling, always remind:
 
 ## Cost
 
-This skill does not spend richapi credits. It only sets up future spends — which *are* gated by the ceiling the user agreed to.
+This skill does not spend Richapi credits. It only sets up future spends — which *are* gated by the ceiling the user agreed to.
