@@ -1,12 +1,12 @@
 # Architecture
 
-This document explains the three load-bearing pieces of `texau-gtm-skills`: the catalog, the preflight contract, and the routing model. Read it if you're extending the pack or debugging why a skill is doing the wrong thing.
+This document explains the three load-bearing pieces of `richapi-gtm-skills`: the catalog, the preflight contract, and the routing model. Read it if you're extending the pack or debugging why a skill is doing the wrong thing.
 
 ---
 
 ## 1. The catalog — `_lib/mcp-catalog.json`
 
-The catalog is a JSON snapshot of the TexAu MCP's tool surface. It is the **only** place in the repo where tool names, categories, credit costs, async/sync flags, bulk variants, and follow-up tools are recorded. Skills never hard-code any of this — they read the catalog.
+The catalog is a JSON snapshot of the richapi MCP's tool surface. It is the **only** place in the repo where tool names, categories, credit costs, async/sync flags, bulk variants, and follow-up tools are recorded. Skills never hard-code any of this — they read the catalog.
 
 ### Why a snapshot, not a live call
 
@@ -18,21 +18,21 @@ The catalog is a JSON snapshot of the TexAu MCP's tool surface. It is the **only
 
 | Trigger | Path |
 |---|---|
-| User manually syncs | `./bin/texau-skills-sync` |
+| User manually syncs | `./bin/richapi-skills-sync` |
 | Skill preamble detects `CATALOG_STALE: yes` + `NET: online` + `sync_on_start=true` | Background sync, non-blocking |
 | GitHub Actions CI — weekly cron | Commits updated catalog if the MCP surface changed |
 | User sets up fresh install | `./setup` runs sync as its last step |
 
-### Resolution order (in `bin/texau-skills-sync`)
+### Resolution order (in `bin/richapi-skills-sync`)
 
 ```
-1.  GET https://mcp.texau.com/catalog.json         (public, no auth — preferred)
-2.  POST https://mcp.texau.com/mcp tools/list      (requires TEXAU_API_KEY)
+1.  GET https://mcp.richapi.com/catalog.json         (public, no auth — preferred)
+2.  POST https://mcp.richapi.com/mcp tools/list      (requires richapi_API_KEY)
 3.  (both failed) leave shipped snapshot in place  (non-fatal — warns user)
 ```
 
-Layer 1 doesn't exist yet in the MCP server. It's a 10-line endpoint addition to `texau-v3-apis/mcp-server/src/worker.ts` and unlocks zero-config auto-updates. Shipping this unblocks:
-- Skills auto-refresh on every session start with no `TEXAU_API_KEY` ceremony.
+Layer 1 doesn't exist yet in the MCP server. It's a 10-line endpoint addition to `richapi-v3-apis/mcp-server/src/worker.ts` and unlocks zero-config auto-updates. Shipping this unblocks:
+- Skills auto-refresh on every session start with no `richapi_API_KEY` ceremony.
 - Users who read-only the pack (no MCP connection yet) still get fresh data.
 - CDN caching means the cost of the call is effectively zero.
 
@@ -51,7 +51,7 @@ See `_lib/mcp-catalog.schema.json`. Key sections:
 
 ### Merging live data with curated metadata
 
-When `texau-skills-sync` fetches via `tools/list`, it gets only `name` + `description`. The sync script merges by name:
+When `richapi-skills-sync` fetches via `tools/list`, it gets only `name` + `description`. The sync script merges by name:
 - Existing entries: keep all curated fields, overwrite `description` with the latest.
 - New entries (not in the snapshot): add as `category: "uncategorized"`.
 
@@ -59,7 +59,7 @@ Contributors are expected to annotate `uncategorized` tools in their next PR. Th
 
 ---
 
-## 2. The preflight contract — `bin/texau-skills-preflight`
+## 2. The preflight contract — `bin/richapi-skills-preflight`
 
 Every skill's first command is the preflight script. It emits `KEY: value` pairs on stdout — one per line, stable order, documented names. Claude reads them to decide whether to sync, warn, or proceed.
 
@@ -87,7 +87,7 @@ Every skill's first command is the preflight script. It emits `KEY: value` pairs
 
 ---
 
-## 3. Routing model — `skills/texau-gtm/SKILL.md`
+## 3. Routing model — `skills/richapi-gtm/SKILL.md`
 
 The entry skill is a router, not a doer. Its single responsibility is to match the user's intent to the right specialist skill.
 
@@ -104,7 +104,7 @@ This is the same pattern gstack uses — `office-hours` routes to `plan-ceo-revi
 
 ### The routing table
 
-Duplicated in `skills/texau-gtm/SKILL.md` and `README.md`. If you add a sub-skill, update both.
+Duplicated in `skills/richapi-gtm/SKILL.md` and `README.md`. If you add a sub-skill, update both.
 
 ### When the router is bypassed
 
@@ -118,10 +118,10 @@ Single-skill invocation:
 
 ```
 User prompt
-  └▶ Claude matches "texau-gtm" (router) by trigger phrase or CLAUDE.md rule
-       └▶ run bin/texau-skills-preflight         [~50ms]
+  └▶ Claude matches "richapi-gtm" (router) by trigger phrase or CLAUDE.md rule
+       └▶ run bin/richapi-skills-preflight         [~50ms]
             └▶ emits KEY: value pairs
-       └▶ if stale+online: background texau-skills-sync    (non-blocking)
+       └▶ if stale+online: background richapi-skills-sync    (non-blocking)
        └▶ read _lib/mcp-catalog.json              [in-context]
        └▶ read _lib/filters-catalog.json          [if lead_search path]
        └▶ classify user intent
@@ -143,11 +143,11 @@ User prompt
 | Failure | Where it's caught | User experience |
 |---|---|---|
 | MCP offline | `NET: offline` in preflight | Warn once; proceed with cached catalog |
-| Catalog corrupt | `CATALOG_OK: no` | Block; instruct user to run `texau-skills-sync` |
+| Catalog corrupt | `CATALOG_OK: no` | Block; instruct user to run `richapi-skills-sync` |
 | No API key + tries to call paid tool | `API_KEY_SET: no` + sub-skill inspection | Tell user to connect MCP or set key |
 | Tool name unknown at call site | Sub-skill checks catalog before calling | Friendly error ("I don't see `x` in the catalog — is the pack up to date?") |
 | Tool cost exceeds budget | Sub-skill's cost gate | `AskUserQuestion` confirmation |
-| Sync fails (network, auth, etc.) | `texau-skills-sync` non-fatal exit | Cached snapshot continues to serve |
+| Sync fails (network, auth, etc.) | `richapi-skills-sync` non-fatal exit | Cached snapshot continues to serve |
 | New MCP tool without curated metadata | Sync merges with `category: "uncategorized"` | Works; contributor annotates in next PR |
 
 ---
@@ -157,4 +157,4 @@ User prompt
 - **No state between sessions.** No SQLite, no persistent cache of prospects. If we did, we'd have privacy and multi-user concerns. Every session starts fresh — the MCP provides billing persistence, not us.
 - **No direct API calls.** Skills always go through the MCP tool layer. This keeps auth, rate limiting, and billing centralized.
 - **No writing to the user's CRM.** The `crm-export` skill shapes data; the user runs their CRM's import. One-way is safer — we can't accidentally corrupt a CRM from here.
-- **No telemetry.** gstack has telemetry; we don't. TexAu's existing usage tracking at the MCP layer captures what matters; we don't need another data stream.
+- **No telemetry.** gstack has telemetry; we don't. richapi's existing usage tracking at the MCP layer captures what matters; we don't need another data stream.

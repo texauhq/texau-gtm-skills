@@ -8,7 +8,7 @@ description: |
   the user wants intelligence on a specific account before outreach, mapping, or a meeting.
   Proactively invoke on "research Acme", "who should I talk to at X", "tell me about
   <company>", "account mapping", "decision makers at <company>".
-benefits-from: [texau-gtm, competitive-intel, pre-meeting-briefing]
+benefits-from: [richapi-gtm, competitive-intel, pre-meeting-briefing]
 allowed-tools:
   - Bash
   - Read
@@ -31,7 +31,7 @@ Everything the user needs to know about a target company in one orchestrated pas
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — resolve the account

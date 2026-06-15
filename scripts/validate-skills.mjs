@@ -14,7 +14,7 @@ const SKILLS    = join(ROOT, 'skills');
 const CATALOG   = join(ROOT, '_lib', 'mcp-catalog.json');
 
 const REQUIRED_FRONTMATTER = ['name', 'version', 'description', 'allowed-tools', 'triggers'];
-const PREAMBLE_MARKER      = 'texau-skills-preflight';
+const PREAMBLE_MARKER      = 'richapi-skills-preflight';
 const SEMVER_RE            = /^\d+\.\d+\.\d+(-[\w.]+)?$/;
 
 const errors = [];
@@ -24,13 +24,14 @@ function err (skill, msg) { errors.push(`✗ ${skill}: ${msg}`); }
 function warn(skill, msg) { warnings.push(`! ${skill}: ${msg}`); }
 
 if (!existsSync(CATALOG)) {
-  console.error(`✗ missing ${CATALOG} — run bin/texau-skills-sync first`);
+  console.error(`✗ missing ${CATALOG} — run bin/richapi-skills-sync first`);
   process.exit(2);
 }
 const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
 const knownTools = new Set(catalog.tools.map(t => t.name));
 
 function parseFrontmatter(src) {
+  src = src.replace(/\r\n/g, '\n');
   if (!src.startsWith('---\n')) return { ok: false, reason: 'no frontmatter fence' };
   const end = src.indexOf('\n---\n', 4);
   if (end < 0) return { ok: false, reason: 'unterminated frontmatter fence' };

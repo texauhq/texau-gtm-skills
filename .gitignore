@@ -1,5 +1,5 @@
 # State written by bin/* at runtime (per-user, per-host)
-.texau-skills/
+.richapi-skills/
 node_modules/
 *.log
 .DS_Store

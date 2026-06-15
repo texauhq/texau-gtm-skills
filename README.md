@@ -1,4 +1,4 @@
-# TexAu GTM Skills
+# richapi GTM Skills
 
 
 ```text
@@ -9,7 +9,7 @@
   |_|\___/_/\_\/_/   \_\__,_|  \____| |_| |_|  |_| |____/|_|\_\_|_|_|___/
 ```
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.texau.com) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Claude Skills](https://img.shields.io/badge/Claude-Skills-8a4fff)](https://claude.com/claude-code) [![16 skills](https://img.shields.io/badge/skills-16-blue)](./skills) [![66 MCP tools](https://img.shields.io/badge/MCP%20tools-66-green)](https://mcp.richapi.com) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./docs/CONTRIBUTING.md)
 
 **Anyone can be a GTM engineer.** Build prospecting, enrichment, competitive intelligence, account research, pre-meeting briefings, list hygiene, cold-outreach sequences, CRM sync, and evidence scoring — inside Claude. One credit pool, 50+ real-time data providers, zero SaaS subscriptions, and Claude's scheduling feature turns any of it into a self-running workflow.
 
@@ -19,8 +19,8 @@
 
 ## Get started — free 500 credits for open-source users
 
-1. **Create an account and grab your API key:** [enrich.texau.com](https://enrich.texau.com)
-2. **Trying this from GitHub? Email [support@texau.com](mailto:support@texau.com)** with a note that you found this on GitHub (or linked to your open-source project). Mention this pack and we'll credit **500 free test credits** to your account — enough for a few full prospecting + enrichment runs to see if it fits your workflow before you spend a dollar.
+1. **Create an account and grab your API key:** [enrich.richapi.com](https://enrich.richapi.com)
+2. **Trying this from GitHub? Email [support@richapi.com](mailto:support@richapi.com)** with a note that you found this on GitHub (or linked to your open-source project). Mention this pack and we'll credit **500 free test credits** to your account — enough for a few full prospecting + enrichment runs to see if it fits your workflow before you spend a dollar.
 3. **Install the pack** (30 seconds — see below) and ask Claude to do its first GTM run.
 
 No card on file. No trial timer. We want you to try it with real data.
@@ -40,7 +40,7 @@ The modern GTM stack is broken by design. You pay:
 
 Total: **$2,200–$10,300/mo per seat**, most of which sits idle 27 days out of 30.
 
-**TexAu flips it.** One MCP connects Claude to 55+ GTM tools across 50+ data providers. You pay per call — fractional credits — and Claude handles orchestration, ICP translation, cost optimization, and compliance. No subscription. No seats. No shelfware.
+**richapi flips it.** One MCP connects Claude to 55+ GTM tools across 50+ data providers. You pay per call — fractional credits — and Claude handles orchestration, ICP translation, cost optimization, and compliance. No subscription. No seats. No shelfware.
 
 This skills pack is the opinionated brain on top. It turns every "I need to do X in my GTM stack" into one natural-language prompt.
 
@@ -64,7 +64,7 @@ Ask Claude anything from this list, and it happens:
 
 | Skill | What it does | Typical cost |
 | --- | --- | --- |
-| **[texau-gtm](./skills/texau-gtm/SKILL.md)** | Entry router. Picks the right sub-skill. Refreshes the MCP catalog if stale. | 0 |
+| **[richapi-gtm](./skills/richapi-gtm/SKILL.md)** | Entry router. Picks the right sub-skill. Refreshes the MCP catalog if stale. | 0 |
 | **[build-prospect-list](./skills/build-prospect-list/SKILL.md)** | ICP → `lead_search` / `people_search` / `profile_search`. Narrow-first, sessionId pagination, cost-gated. | 0.1–0.5 / result |
 | **[enrich-and-verify](./skills/enrich-and-verify/SKILL.md)** | Profile → email → deliverability. Sync waterfall for singletons, async batch for lists. | 2 / success |
 | **[account-research](./skills/account-research/SKILL.md)** | Firmographics + decision makers + tech stack + recent posts. | ~15 cr |
@@ -79,7 +79,7 @@ Ask Claude anything from this list, and it happens:
 | **[scheduled-workflow](./skills/scheduled-workflow/SKILL.md)** | Turns any skill into a recurring Claude schedule. Weekly prospect refresh, nightly enrichment, daily briefings, monthly account reviews. | 0 |
 | **[cost-optimizer](./skills/cost-optimizer/SKILL.md)** | Consulted before spending. Ranks every viable path by cost. Flags anti-patterns. | 0 |
 
-Seven of the thirteen spend zero TexAu credits — they're pure strategy, scoring, and format skills. The paid skills have hard cost ceilings.
+Seven of the thirteen spend zero richapi credits — they're pure strategy, scoring, and format skills. The paid skills have hard cost ceilings.
 
 ---
 
@@ -111,33 +111,33 @@ See [scheduled-workflow](./skills/scheduled-workflow/SKILL.md) for the full set 
 
 - Claude Code, Claude Desktop, Cursor, Windsurf, or any MCP-compatible client
 - `bash`, `curl`, `jq`
-- A **TexAu API key** — [enrich.texau.com](https://enrich.texau.com) *(open-source users: mention this repo to [support@texau.com](mailto:support@texau.com) for 500 free credits)*
+- A **richapi API key** — [enrich.richapi.com](https://enrich.richapi.com) *(open-source users: mention this repo to [support@richapi.com](mailto:support@richapi.com) for 500 free credits)*
 
 ### Install
 
 ```bash
-git clone --depth 1 https://github.com/texauhq/texau-gtm-skills.git \
-  ~/.claude/skills/texau-gtm-skills
-cd ~/.claude/skills/texau-gtm-skills
+git clone --depth 1 https://github.com/richapihq/richapi-gtm-skills.git \
+  ~/.claude/skills/richapi-gtm-skills
+cd ~/.claude/skills/richapi-gtm-skills
 ./setup
 ```
 
 The installer writes a routing block you paste into `~/.claude/CLAUDE.md`. That's it.
 
-### Connect the TexAu MCP
+### Connect the richapi MCP
 
 ```json
 {
   "mcpServers": {
-    "texau": {
-      "url": "https://mcp.texau.com/mcp",
-      "headers": { "x-api-key": "your-texau-api-key" }
+    "richapi": {
+      "url": "https://mcp.richapi.com/mcp",
+      "headers": { "x-api-key": "your-richapi-api-key" }
     }
   }
 }
 ```
 
-Setup for every client is in the [TexAu MCP README](../texau-v3-apis/mcp-server/README.md).
+Setup for every client is in the [richapi MCP README](../richapi-v3-apis/mcp-server/README.md).
 
 ### Try it
 
@@ -155,7 +155,7 @@ Watch the router fire, the cost ceiling land, the tools chain, and the result fo
 
 ```text
  ┌───────────────────────────┐       ┌──────────────────────────┐
- │  Claude (Code / Desktop)  │──────▶│  texau-gtm (entry skill) │
+ │  Claude (Code / Desktop)  │──────▶│  richapi-gtm (entry skill) │
  └───────────────────────────┘       └───────────┬──────────────┘
                                                   │ routes by intent
        ┌──────────────┬──────────────┬────────────┼─────────────┬──────────────┬──────────┐
@@ -168,12 +168,12 @@ Watch the router fire, the cost ceiling land, the tools chain, and the result fo
                              ▼                                                ▼         ▼
                   ┌────────────────────────────────────────────────────────────────────────┐
                   │     _lib/mcp-catalog.json — source of truth for tools + costs          │
-                  │     refreshed weekly by bin/texau-skills-sync (3-layer fallback)       │
+                  │     refreshed weekly by bin/richapi-skills-sync (3-layer fallback)       │
                   └───────────────────────────────┬────────────────────────────────────────┘
                                                    │
                                                    ▼
                   ┌────────────────────────────────────────────────────────────────────────┐
-                  │  TexAu MCP  —  https://mcp.texau.com/mcp  (auth: x-api-key)            │
+                  │  richapi MCP  —  https://mcp.richapi.com/mcp  (auth: x-api-key)            │
                   │  55 tools across LinkedIn / email / web / search / YouTube / AI / ...  │
                   │  50+ data providers behind the scenes; one credit pool for all         │
                   └────────────────────────────────────────────────────────────────────────┘
@@ -187,12 +187,12 @@ Deep-dive: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) · [docs/PRINCIPLES.md
 
 ## The self-refreshing catalog
 
-Every skill reads [`_lib/mcp-catalog.json`](./_lib/mcp-catalog.json) — a snapshot of the MCP's tool surface with credit costs, categories, async/sync flags, bulk variants, and follow-up tools. **No tool names or costs are hard-coded** in any skill. When TexAu ships a new tool or changes a price, one sync run propagates the change to every skill.
+Every skill reads [`_lib/mcp-catalog.json`](./_lib/mcp-catalog.json) — a snapshot of the MCP's tool surface with credit costs, categories, async/sync flags, bulk variants, and follow-up tools. **No tool names or costs are hard-coded** in any skill. When richapi ships a new tool or changes a price, one sync run propagates the change to every skill.
 
 ### Three layers of freshness
 
-1. **Public catalog** (`https://mcp.texau.com/catalog.json`) — no auth, preferred. *(Endpoint is on the roadmap; until it lands, layer 2 kicks in.)*
-2. **MCP `tools/list`** — live tool catalog using your `TEXAU_API_KEY`, merged with curated metadata.
+1. **Public catalog** (`https://mcp.richapi.com/catalog.json`) — no auth, preferred. *(Endpoint is on the roadmap; until it lands, layer 2 kicks in.)*
+2. **MCP `tools/list`** — live tool catalog using your `richapi_API_KEY`, merged with curated metadata.
 3. **Shipped snapshot** — always in the repo as the last-resort fallback.
 
 Skills auto-refresh in the background when the catalog is > 7 days old. Offline? The snapshot still works.
@@ -200,7 +200,7 @@ Skills auto-refresh in the background when the catalog is > 7 days old. Offline?
 ### Upgrading the pack itself
 
 ```bash
-cd ~/.claude/skills/texau-gtm-skills && git pull && ./setup
+cd ~/.claude/skills/richapi-gtm-skills && git pull && ./setup
 ```
 
 Idempotent. Re-running `./setup` just re-verifies perms and re-syncs.
@@ -235,7 +235,7 @@ How a solo founder or a two-person GTM team replaces their entire stack:
 7. **Anytime a new account heats up** — `account-research` + `competitive-intel` gives you the full picture in one prompt.
 
 **Total software bill replaced:** ~$1,500/mo across 6 tools.
-**Total TexAu spend for a full-volume outbound week (500 leads, full pipeline):** ~$15-30 in credits.
+**Total richapi spend for a full-volume outbound week (500 leads, full pipeline):** ~$15-30 in credits.
 **Human time reclaimed:** the 8-12 hours per week the user used to spend on list-building, research, hygiene, and sequence copy.
 
 ---
@@ -247,8 +247,8 @@ See [CLAUDE.md](./CLAUDE.md) (contributor guide) and [docs/CONTRIBUTING.md](./do
 Quick start:
 
 ```bash
-git clone https://github.com/texau/texau-gtm-skills.git
-cd texau-gtm-skills
+git clone https://github.com/richapi/richapi-gtm-skills.git
+cd richapi-gtm-skills
 ./setup
 node scripts/validate-skills.mjs   # lints every skill
 ```
@@ -263,4 +263,4 @@ MIT. Fork it, extend it, build your own GTM packs on the same pattern.
 
 ## Prior art
 
-We looked at how existing Claude Skill packs handle preamble contracts, update-checks, and CLAUDE.md routing — notably [garrytan/gstack](https://github.com/garrytan/gstack) — before shipping our own take. The architecture (catalog-first, three-layer freshness, credit-gated routing, schedule-native orchestration) is specific to TexAu's credit economy and doesn't carry over directly from any other pack.
+We looked at how existing Claude Skill packs handle preamble contracts, update-checks, and CLAUDE.md routing — notably [garrytan/gstack](https://github.com/garrytan/gstack) — before shipping our own take. The architecture (catalog-first, three-layer freshness, credit-gated routing, schedule-native orchestration) is specific to richapi's credit economy and doesn't carry over directly from any other pack.

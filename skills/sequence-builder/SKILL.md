@@ -10,7 +10,7 @@ description: |
   on "write a sequence for this list", "build a cold email campaign", "give me a
   Lemlist sequence", "generate variants", or after build-prospect-list when the user
   mentions sending.
-benefits-from: [texau-gtm, outreach-expert, build-prospect-list, enrich-and-verify, list-hygiene, crm-sync-expert, scheduled-workflow]
+benefits-from: [richapi-gtm, outreach-expert, build-prospect-list, enrich-and-verify, list-hygiene, crm-sync-expert, scheduled-workflow]
 allowed-tools:
   - Bash
   - Read
@@ -35,7 +35,7 @@ Outputs a complete, paste-ready cold sequence for one sending tool. Not a copywr
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — gather the brief
@@ -47,7 +47,7 @@ Ask these in one `AskUserQuestion` batch — don't drip them out. Required:
 | **Sending tool** | Lemlist / Smartlead / Instantly / Reply.io / Woodpecker / Apollo |
 | **Target segment** | "VP Sales at 200-500 SaaS in NYC / SF" |
 | **Pain / trigger** | "Spending too many manual hours on LinkedIn prospecting" |
-| **Offer** | "A Claude skill pack that turns the TexAu MCP into opinionated GTM workflows" |
+| **Offer** | "A Claude skill pack that turns the richapi MCP into opinionated GTM workflows" |
 | **Proof asset** | Case study, data point, logo, or customer quote — one thing |
 | **CTA style** | Soft ask ("worth a 10-min call?") / hard ask ("15 min Thursday?") / value-first ("here's a free tool") |
 | **Personalization depth** | L0 firstName only / L1 company hook / L2 dynamic image / L3 hand-researched |
@@ -292,10 +292,10 @@ Data pipeline cost:
   list-hygiene        (classify + verify)     : 250 credits
 Data total:                                     ~1300 credits
 
-Sending tool cost:     per-seat subscription — not TexAu credits
+Sending tool cost:     per-seat subscription — not richapi credits
 ```
 
-Make this clear — TexAu credits are for *data*; the sending tool charges separately per seat. Don't conflate the two.
+Make this clear — richapi credits are for *data*; the sending tool charges separately per seat. Don't conflate the two.
 
 ## Phase 7 — scheduling the campaign launch
 
@@ -340,4 +340,4 @@ If the user asked for the response as a file, write to `./sequences/<segment-slu
 
 ## Cost
 
-This skill doesn't spend TexAu credits. It transforms an already-enriched list into a sequence. All the data spend happened upstream.
+This skill doesn't spend richapi credits. It transforms an already-enriched list into a sequence. All the data spend happened upstream.

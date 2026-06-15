@@ -10,7 +10,7 @@ description: |
   writes a plain-English schedule summary the user can edit later. Proactively offer
   when a user finishes any workflow that would obviously benefit from running again
   on a cadence.
-benefits-from: [texau-gtm, build-prospect-list, enrich-and-verify, account-research, pre-meeting-briefing, list-hygiene, competitive-intel, evidence-score]
+benefits-from: [richapi-gtm, build-prospect-list, enrich-and-verify, account-research, pre-meeting-briefing, list-hygiene, competitive-intel, evidence-score]
 allowed-tools:
   - Bash
   - Read
@@ -37,7 +37,7 @@ The "set it and forget it" specialist. Wraps Claude's scheduling feature around 
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — is scheduling the right answer?
@@ -88,7 +88,7 @@ Scheduled workflow — <workflow-name>
 Cadence:          <cron expression or human description>
 Cost ceiling:     <N credits / month>
 On-run prompt:
-    Load the texau-gtm skill. Run <sub-skill> with these filters: <JSON>.
+    Load the richapi-gtm skill. Run <sub-skill> with these filters: <JSON>.
     If running cost would exceed <ceiling remaining>, skip and log.
     On completion, <delivery method below>.
 Delivery:         email | Slack webhook | Claude conversation | write to file
@@ -226,9 +226,9 @@ After scheduling, always remind:
 
 - "You can list all schedules by asking me to `/schedule list`."
 - "Edit by saying `update my weekly prospect refresh: change the industry to Fintech`."
-- "Pause by saying `pause all texau schedules for 2 weeks`."
+- "Pause by saying `pause all richapi schedules for 2 weeks`."
 - "Cancel by saying `delete the weekly prospect refresh schedule`."
 
 ## Cost
 
-This skill does not spend TexAu credits. It only sets up future spends — which *are* gated by the ceiling the user agreed to.
+This skill does not spend richapi credits. It only sets up future spends — which *are* gated by the ceiling the user agreed to.

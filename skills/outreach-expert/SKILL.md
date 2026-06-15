@@ -12,7 +12,7 @@ description: |
   or diagnosing a cold campaign. Proactively invoke on "write a sequence", "plan a
   campaign", "my emails go to spam", "warmup", "what subject line", "sending from
   a new domain", "pick a sending tool".
-benefits-from: [texau-gtm, build-prospect-list, enrich-and-verify, list-hygiene, crm-sync-expert]
+benefits-from: [richapi-gtm, build-prospect-list, enrich-and-verify, list-hygiene, crm-sync-expert]
 allowed-tools:
   - Bash
   - Read
@@ -40,7 +40,7 @@ An advisor, not an executor. This skill doesn't send email — it tells the user
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — classify the ask
@@ -65,7 +65,7 @@ The single highest-leverage thing a B2B outbound operator can get right. Bad inf
 ### Domain strategy
 
 - **Never send cold from your primary domain.** A blocklist on `yourcompany.com` kills both cold outbound *and* support/sales replies on your warm domain.
-- Buy **2–5 lookalike domains** per main brand (e.g. `trytexau.com`, `get-texau.com`, `texau.io`). Mix hyphens and TLDs. Point them at MX that lets you auth properly — Google Workspace and Outlook 365 are the practical choices.
+- Buy **2–5 lookalike domains** per main brand (e.g. `tryrichapi.com`, `get-richapi.com`, `richapi.io`). Mix hyphens and TLDs. Point them at MX that lets you auth properly — Google Workspace and Outlook 365 are the practical choices.
 - One sending mailbox = **30–50 cold sends per day maximum**, forever. Scale by adding mailboxes, never by cranking one.
 - Warm up every new mailbox for **14–21 days** before the first real send. Lemlist, Smartlead, Instantly, Warmy, and Mailwarm all do automated warmup.
 
@@ -198,7 +198,7 @@ Day 20   Email: step 4 (break-up)
 
 Evidence: this roughly doubles positive reply rates vs email-only, per Smartlead and Reply.io case studies and Lemlist's own 2024 multichannel report.
 
-TexAu MCP supports the LinkedIn half of this: `enrich_profile`, `profile_activities` (to find their recent post for the like), and (when paired with the TexAu automation layer) visit/connect workflows.
+richapi MCP supports the LinkedIn half of this: `enrich_profile`, `profile_activities` (to find their recent post for the like), and (when paired with the richapi automation layer) visit/connect workflows.
 
 ## 6 — Tool selection
 
@@ -260,7 +260,7 @@ Strictest of the three. **Opt-in required** for almost every cold send. Implied 
 
 ## What this skill does NOT do
 
-- It does not call the TexAu MCP (no paid tool calls). It's pure advisory.
+- It does not call the richapi MCP (no paid tool calls). It's pure advisory.
 - It does not send email. It tells the user what to send and how.
 - It does not generate the final copy unless the user explicitly asks — copy generation is a separate decision, not a default.
 

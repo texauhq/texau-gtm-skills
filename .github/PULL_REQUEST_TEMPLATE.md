@@ -19,6 +19,6 @@ Redact names / companies if needed.
 - [ ] `node scripts/validate-skills.mjs` passes
 - [ ] `VERSION` bumped (top-level and/or per-skill frontmatter)
 - [ ] `README.md` catalog updated if a skill was added / removed
-- [ ] `skills/texau-gtm/SKILL.md` routing table updated if a skill was added / removed
-- [ ] Ran against a live TexAu MCP (not just a dry-run)
+- [ ] `skills/richapi-gtm/SKILL.md` routing table updated if a skill was added / removed
+- [ ] Ran against a live richapi MCP (not just a dry-run)
 - [ ] `CHANGELOG.md` entry added under `## [Unreleased]` or the target version

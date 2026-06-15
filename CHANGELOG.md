@@ -13,7 +13,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ### Changed
 
-- `texau-gtm` router: 2 new routing rows (hyperlocal / SMB → `local-business-prospecting`; account monitoring → `signal-monitor`).
+- `richapi-gtm` router: 2 new routing rows (hyperlocal / SMB → `local-business-prospecting`; account monitoring → `signal-monitor`).
 - README badge: 14 → 16 skills.
 
 ## [1.1.0] — 2026-05-04
@@ -30,7 +30,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ### Changed
 
 - `_lib/mcp-catalog.json`: tools[] grew from 55 → 66; `version` → `1.1.0`; `generated_at` refreshed.
-- `texau-gtm` router skill: bumped to 1.1.0 (no behavior change — router reads catalog at runtime).
+- `richapi-gtm` router skill: bumped to 1.1.0 (no behavior change — router reads catalog at runtime).
 - README badge: 55 → 66 MCP tools.
 
 ### Notes for skill authors
@@ -46,7 +46,7 @@ Initial public release.
 ### Added
 
 - **14 skills** covering the GTM surface:
-  - `texau-gtm` — entry router
+  - `richapi-gtm` — entry router
   - `build-prospect-list` — ICP-driven prospecting
   - `enrich-and-verify` — profile → email → deliverability chain
   - `account-research` — firmographics + decision makers + tech + posts
@@ -60,8 +60,8 @@ Initial public release.
   - `crm-sync-expert` — CRM architecture for HubSpot / Salesforce / GHL / Pipedrive
   - `scheduled-workflow` — recurring Claude-scheduled workflows
   - `cost-optimizer` — cheapest-path advisory
-- **Self-refreshing catalog** — `bin/texau-skills-sync` with three-layer fallback (public `/catalog.json` → MCP `tools/list` → shipped snapshot).
-- **Preflight contract** — `bin/texau-skills-preflight` emits stable `KEY: value` pairs for skills to consume.
+- **Self-refreshing catalog** — `bin/richapi-skills-sync` with three-layer fallback (public `/catalog.json` → MCP `tools/list` → shipped snapshot).
+- **Preflight contract** — `bin/richapi-skills-preflight` emits stable `KEY: value` pairs for skills to consume.
 - **Static validator** — `scripts/validate-skills.mjs` lints frontmatter, preamble, links, and tool invocations against `_lib/mcp-catalog.json`.
 - **CI** — `.github/workflows/validate.yml` validates on every PR and refreshes the catalog weekly.
 - **Scheduling offers** — every skill that produces recurring value closes with a `scheduled-workflow` offer.
@@ -71,4 +71,4 @@ Initial public release.
 
 - Claude Code / Desktop / Cursor / Windsurf / any MCP-aware client
 - Bash, curl, jq
-- A TexAu API key ([enrich.texau.com](https://enrich.texau.com))
+- A richapi API key ([enrich.richapi.com](https://enrich.richapi.com))

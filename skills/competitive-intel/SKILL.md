@@ -7,7 +7,7 @@ description: |
   competitors side-by-side when asked. Uses ad_search, website_intelligence, web_tech_stack,
   post_keyword_search, and profile_activities on key executives. Proactively invoke on
   "what ads is X running", "compare X vs Y", "what tech does X use", "competitive scan".
-benefits-from: [texau-gtm, account-research]
+benefits-from: [richapi-gtm, account-research]
 allowed-tools:
   - Bash
   - Read
@@ -30,7 +30,7 @@ Quick, comparable, evidence-based snapshots of competitors.
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — define the question

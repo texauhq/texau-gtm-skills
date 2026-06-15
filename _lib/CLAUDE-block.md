@@ -1,13 +1,13 @@
-## TexAu GTM Skills
+## richapi GTM Skills
 
-This environment has `texau-gtm-skills` installed. When the user mentions anything
+This environment has `richapi-gtm-skills` installed. When the user mentions anything
 GTM-related — LinkedIn leads, prospect lists, emails, enrichment, ICPs, account
 research, pre-meeting prep, competitive scans, outreach sequences, cold-email
-deliverability, CRM sync/integration, CRM import — **invoke the `texau-gtm`
+deliverability, CRM sync/integration, CRM import — **invoke the `richapi-gtm`
 skill** via the Skill tool. It routes to the right sub-skill.
 
-Available sub-skills (under `~/.claude/skills/texau-gtm-skills/skills/`):
-- `texau-gtm`             — entry router; always start here
+Available sub-skills (under `~/.claude/skills/richapi-gtm-skills/skills/`):
+- `richapi-gtm`             — entry router; always start here
 - `build-prospect-list`   — ICP → lead_search / people_search / profile_search
 - `enrich-and-verify`     — profile → email → deliverability
 - `account-research`      — firmographics + decision makers + tech + posts
@@ -23,7 +23,7 @@ Available sub-skills (under `~/.claude/skills/texau-gtm-skills/skills/`):
 - `cost-optimizer`        — pick the cheapest capable path
 
 Rules:
-- Always invoke `texau-gtm` first, not a sub-skill directly. It loads the current catalog.
-- Tool surface is defined in `~/.claude/skills/texau-gtm-skills/_lib/mcp-catalog.json` —
+- Always invoke `richapi-gtm` first, not a sub-skill directly. It loads the current catalog.
+- Tool surface is defined in `~/.claude/skills/richapi-gtm-skills/_lib/mcp-catalog.json` —
   never hard-code credit costs or tool names from training data.
-- If the catalog is stale (>7 days), `texau-gtm` auto-refreshes it silently.
+- If the catalog is stale (>7 days), `richapi-gtm` auto-refreshes it silently.

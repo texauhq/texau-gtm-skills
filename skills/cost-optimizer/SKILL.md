@@ -2,12 +2,12 @@
 name: cost-optimizer
 version: 1.0.0
 description: |
-  Advises on the cheapest TexAu tool path for a stated goal. Consulted before spending —
+  Advises on the cheapest richapi tool path for a stated goal. Consulted before spending —
   turns "I want 500 CTOs with emails" into a cost-accurate plan, shows comparative
   costs for every viable path, and flags anti-patterns (loops, over-verification,
   redundant enrichment). Use when the user asks "what's the cheapest way", "how much
   will this cost", "I have N credits left — what can I do", or before any big-spend job.
-benefits-from: [texau-gtm]
+benefits-from: [richapi-gtm]
 allowed-tools:
   - Bash
   - Read
@@ -28,7 +28,7 @@ The credit-math skill. Never guesses — always grounds in `_lib/mcp-catalog.jso
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 Read `_lib/mcp-catalog.json` in full before answering. Never cite a credit cost from your training data — it will be wrong.

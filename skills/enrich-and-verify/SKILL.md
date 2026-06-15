@@ -7,7 +7,7 @@ description: |
   (waterfall, sync) and batch (async job + polling) paths. Use when the user has one or
   more LinkedIn profile URLs or names and wants contact data attached. Proactively invoke
   on "enrich this profile", "find their email", "verify these emails", "hydrate this list".
-benefits-from: [texau-gtm, build-prospect-list, list-hygiene]
+benefits-from: [richapi-gtm, build-prospect-list, list-hygiene]
 allowed-tools:
   - Bash
   - Read
@@ -30,7 +30,7 @@ Three hops, one skill. **Enrich → Find → Verify**. Pick the right batch mode
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 Block on `CATALOG_OK: no`.

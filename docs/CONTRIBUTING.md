@@ -3,15 +3,15 @@
 ## Setup
 
 ```bash
-git clone https://github.com/texau/texau-gtm-skills.git
-cd texau-gtm-skills
+git clone https://github.com/richapi/richapi-gtm-skills.git
+cd richapi-gtm-skills
 ./setup
 ```
 
 Confirm:
 ```bash
 node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
-./bin/texau-skills-preflight       # should emit KEY: value pairs
+./bin/richapi-skills-preflight       # should emit KEY: value pairs
 ```
 
 ## How to add a new skill
@@ -33,7 +33,7 @@ node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
      <One paragraph. What the skill does, when to invoke it, and the specific
      user phrases that should trigger it. This is what Claude matches against —
      be literal about trigger conditions.>
-   benefits-from: [texau-gtm, <other-skills-this-chains-with>]
+   benefits-from: [richapi-gtm, <other-skills-this-chains-with>]
    allowed-tools:
      - Bash
      - Read
@@ -48,7 +48,7 @@ node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
    ```
 
 4. Rewrite the body. Mandatory sections (in order):
-   1. **Preamble** — copy from any existing skill. `bin/texau-skills-preflight` call + interpretation of the KEY: values.
+   1. **Preamble** — copy from any existing skill. `bin/richapi-skills-preflight` call + interpretation of the KEY: values.
    2. **Phase 0** — gather inputs. Ask clarifying questions only when truly necessary.
    3. **Phases 1..N** — the actual workflow. Each phase names its tool, cost, and decision criteria.
    4. **Cost ceiling** — total expected spend + gate threshold.
@@ -56,7 +56,7 @@ node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
    6. **Follow-ups** — which adjacent skills to offer at the end.
 
 5. Wire it into the router:
-   - Add a row to the routing table in `skills/texau-gtm/SKILL.md`.
+   - Add a row to the routing table in `skills/richapi-gtm/SKILL.md`.
    - Add a row to the skill catalog in `README.md`.
 
 6. Validate:
@@ -66,9 +66,9 @@ node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
 
    Fix every error. Warnings are advisory — address them or add intentional exemptions.
 
-7. Test against a real TexAu MCP. In Claude Code:
+7. Test against a real richapi MCP. In Claude Code:
    ```
-   /texau-gtm
+   /richapi-gtm
    (describe your test case — e.g. "Try my new skill on X")
    ```
    Capture the transcript. Attach it to the PR.
@@ -79,7 +79,7 @@ node scripts/validate-skills.mjs   # should print "✓ 9 skill(s) validated."
 
 MCP ships a new tool (e.g. `enrich_phone_bulk`):
 
-1. `./bin/texau-skills-sync` — refreshes `_lib/mcp-catalog.json`. New tool lands as `category: "uncategorized"`.
+1. `./bin/richapi-skills-sync` — refreshes `_lib/mcp-catalog.json`. New tool lands as `category: "uncategorized"`.
 2. Edit `_lib/mcp-catalog.json` — add `category`, `credits`, `billing`, `followup`, `bulk_variant`, `max_batch` as appropriate.
 3. Decide: does this tool belong in an existing skill, or does it warrant a new one?
    - **Existing skill**: update the skill's body to mention it. Version-bump the skill.
@@ -89,7 +89,7 @@ MCP ships a new tool (e.g. `enrich_phone_bulk`):
 
 MCP removes a tool:
 
-1. `./bin/texau-skills-sync` — the removed tool stays in the catalog as a ghost. Manually remove it.
+1. `./bin/richapi-skills-sync` — the removed tool stays in the catalog as a ghost. Manually remove it.
 2. `grep -r <tool_name> skills/` — find every skill that references it. Update or remove those references.
 3. Bump affected skill versions + top-level `VERSION`. PR.
 
@@ -116,8 +116,8 @@ MCP changes a credit cost:
 - [ ] `node scripts/validate-skills.mjs` passes
 - [ ] `VERSION` bumped (top-level and/or per-skill)
 - [ ] `README.md` skill catalog updated (if skill added/removed)
-- [ ] `skills/texau-gtm/SKILL.md` routing table updated (if skill added/removed)
-- [ ] Ran against real TexAu MCP (not just dry-run)
+- [ ] `skills/richapi-gtm/SKILL.md` routing table updated (if skill added/removed)
+- [ ] Ran against real richapi MCP (not just dry-run)
 ```
 
 ## Code of the house
@@ -138,4 +138,4 @@ MCP changes a credit cost:
 
 ## Questions
 
-Open a GitHub issue with the `question` label. Or email gtm-skills@texau.com.
+Open a GitHub issue with the `question` label. Or email gtm-skills@richapi.com.

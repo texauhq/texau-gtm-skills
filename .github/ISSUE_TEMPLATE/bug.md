@@ -16,9 +16,9 @@ The user prompt (redact any sensitive fields).
 
 **Environment**
 
-- Pack version: `cat ~/.claude/skills/texau-gtm-skills/VERSION`
+- Pack version: `cat ~/.claude/skills/richapi-gtm-skills/VERSION`
 - Claude client: Claude Code / Claude Desktop / Cursor / Other
-- `bin/texau-skills-preflight` output:
+- `bin/richapi-skills-preflight` output:
   ```
   <paste here>
   ```

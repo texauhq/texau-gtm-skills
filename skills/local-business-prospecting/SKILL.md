@@ -9,7 +9,7 @@ description: |
   is reviews/ratings/category, outreach is call/SMS/local-targeted email. Proactively invoke on
   phrases like "find all dentists in", "list of restaurants near", "local business list",
   "scrape Google Maps for", "businesses in <city> with <criterion>".
-benefits-from: [texau-gtm, list-hygiene, cost-optimizer, crm-export]
+benefits-from: [richapi-gtm, list-hygiene, cost-optimizer, crm-export]
 allowed-tools:
   - Bash
   - Read
@@ -34,10 +34,10 @@ Build a deduplicated, contact-enriched list of local businesses by category + lo
 ## Preamble — run first
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
-If `CATALOG_OK: no` → stop and run `texau-skills-sync`. Do not guess tool names.
+If `CATALOG_OK: no` → stop and run `richapi-skills-sync`. Do not guess tool names.
 
 ## When to use this skill vs build-prospect-list
 

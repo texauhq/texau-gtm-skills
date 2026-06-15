@@ -9,7 +9,7 @@ description: |
   per competitor) and account-research (which is a deep one-pager) — this is recurring, multi-account,
   and trigger-focused. Proactively invoke on phrases like "monitor these accounts", "buying signals",
   "hiring intent", "trigger digest", "watch for new ads", "alert me when X starts hiring".
-benefits-from: [texau-gtm, account-research, competitive-intel, scheduled-workflow, evidence-score]
+benefits-from: [richapi-gtm, account-research, competitive-intel, scheduled-workflow, evidence-score]
 allowed-tools:
   - Bash
   - Read
@@ -35,10 +35,10 @@ Multi-account, multi-signal, recurring trigger monitoring. Designed to run on a 
 ## Preamble — run first
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
-If `CATALOG_OK: no` → stop and run `texau-skills-sync`.
+If `CATALOG_OK: no` → stop and run `richapi-skills-sync`.
 
 ## When to use this skill
 
@@ -92,7 +92,7 @@ If this is the **first** sweep for this watchlist, the entire surface looks "new
 
 Ask which they want. Default to lookback if they're impatient.
 
-Persist the baseline state to a local file (e.g. `~/.texau-skills/signal-monitor/<watchlist-id>.json`). Each sweep writes a new snapshot; the digest is the **diff** vs the previous snapshot.
+Persist the baseline state to a local file (e.g. `~/.richapi-skills/signal-monitor/<watchlist-id>.json`). Each sweep writes a new snapshot; the digest is the **diff** vs the previous snapshot.
 
 ## Phase 2 — sweep
 
@@ -194,7 +194,7 @@ Always end with cost spent + next sweep date.
 
 ## Phase 5 — persist + schedule
 
-Write the new snapshot to `~/.texau-skills/signal-monitor/<watchlist-id>.json` (overwrites prior). Optionally also write a dated digest archive (`<watchlist-id>/digests/<date>.md`) so the user can compare digests over time.
+Write the new snapshot to `~/.richapi-skills/signal-monitor/<watchlist-id>.json` (overwrites prior). Optionally also write a dated digest archive (`<watchlist-id>/digests/<date>.md`) so the user can compare digests over time.
 
 If the user hasn't yet scheduled this, **strongly** offer it at the end:
 

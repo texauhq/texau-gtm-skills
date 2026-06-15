@@ -1,18 +1,18 @@
 {
-  "name": "@texau/gtm-skills",
+  "name": "@richapi/gtm-skills",
   "version": "1.0.0",
-  "description": "Claude Skills pack that turns the TexAu MCP into an opinionated GTM workflow — prospecting, enrichment, account research, competitive intel, list hygiene, and CRM export. Self-updating catalog; works with Claude Code, Claude Desktop, Cursor.",
+  "description": "Claude Skills pack that turns the richapi MCP into an opinionated GTM workflow — prospecting, enrichment, account research, competitive intel, list hygiene, and CRM export. Self-updating catalog; works with Claude Code, Claude Desktop, Cursor.",
   "private": false,
   "bin": {
-    "texau-skills-sync": "bin/texau-skills-sync",
-    "texau-skills-preflight": "bin/texau-skills-preflight",
-    "texau-skills-config": "bin/texau-skills-config"
+    "richapi-skills-sync": "bin/richapi-skills-sync",
+    "richapi-skills-preflight": "bin/richapi-skills-preflight",
+    "richapi-skills-config": "bin/richapi-skills-config"
   },
   "scripts": {
     "setup": "./setup",
-    "sync": "./bin/texau-skills-sync",
+    "sync": "./bin/richapi-skills-sync",
     "validate": "node scripts/validate-skills.mjs",
-    "check": "./bin/texau-skills-sync --check && node scripts/validate-skills.mjs"
+    "check": "./bin/richapi-skills-sync --check && node scripts/validate-skills.mjs"
   },
   "files": [
     "bin/",
@@ -31,7 +31,7 @@
     "claude-code",
     "mcp",
     "model-context-protocol",
-    "texau",
+    "richapi",
     "gtm",
     "sales-intelligence",
     "linkedin",
@@ -43,18 +43,18 @@
     "hubspot",
     "salesforce"
   ],
-  "homepage": "https://github.com/texau/texau-gtm-skills",
+  "homepage": "https://github.com/richapi/richapi-gtm-skills",
   "repository": {
     "type": "git",
-    "url": "https://github.com/texau/texau-gtm-skills"
+    "url": "https://github.com/richapi/richapi-gtm-skills"
   },
   "bugs": {
-    "url": "https://github.com/texau/texau-gtm-skills/issues"
+    "url": "https://github.com/richapi/richapi-gtm-skills/issues"
   },
   "license": "MIT",
   "author": {
-    "name": "TexAu",
-    "url": "https://texau.com"
+    "name": "richapi",
+    "url": "https://richapi.com"
   },
   "engines": {
     "node": ">=18"

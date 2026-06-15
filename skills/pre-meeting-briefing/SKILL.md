@@ -7,7 +7,7 @@ description: |
   for context. Optionally adds post_details on their top-engaged posts. Use when the user
   has a meeting, call, or interview coming up with a named person or LinkedIn profile.
   Proactively invoke on "prep me for my meeting", "brief me on <name>", "call with X tomorrow".
-benefits-from: [texau-gtm, account-research]
+benefits-from: [richapi-gtm, account-research]
 allowed-tools:
   - Bash
   - Read
@@ -29,7 +29,7 @@ Turn a LinkedIn URL + 90 seconds into "I know enough to have a credible conversa
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — inputs

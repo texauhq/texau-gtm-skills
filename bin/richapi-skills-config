@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Usage:
-#   texau-skills-config get <key>
-#   texau-skills-config set <key> <value>
-#   texau-skills-config unset <key>
-#   texau-skills-config list
+#   richapi-skills-config get <key>
+#   richapi-skills-config set <key> <value>
+#   richapi-skills-config unset <key>
+#   richapi-skills-config list
 #
 # Known keys (others are accepted but may be unused):
 #   proactive       true|false    auto-invoke skills from intent (default: true)
@@ -11,11 +11,11 @@
 #   default_mode    fast|deep
 #   default_batch   <int>
 #
-# Storage: $TEXAU_SKILLS_HOME/config (default ~/.texau-skills/config), KEY=VALUE per line.
+# Storage: $richapi_SKILLS_HOME/config (default ~/.richapi-skills/config), KEY=VALUE per line.
 
 set -eu
 
-HOME_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+HOME_DIR="${richapi_SKILLS_HOME:-$HOME/.richapi-skills}"
 CFG="$HOME_DIR/config"
 mkdir -p "$HOME_DIR"
 touch "$CFG"
@@ -55,7 +55,7 @@ case "$cmd" in
     cat "$CFG"
     ;;
   *)
-    echo "usage: texau-skills-config {get|set|unset|list} [key] [value]" >&2
+    echo "usage: richapi-skills-config {get|set|unset|list} [key] [value]" >&2
     exit 2
     ;;
 esac

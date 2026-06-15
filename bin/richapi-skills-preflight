@@ -10,9 +10,9 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LIB="$ROOT/_lib"
 CATALOG="$LIB/mcp-catalog.json"
 FILTERS="$LIB/filters-catalog.json"
-STATE_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+STATE_DIR="${richapi_SKILLS_HOME:-$HOME/.richapi-skills}"
 LAST_SYNC="$STATE_DIR/.last-sync"
-STALE_SECONDS="${TEXAU_SKILLS_STALE:-$((7 * 24 * 3600))}"
+STALE_SECONDS="${richapi_SKILLS_STALE:-$((7 * 24 * 3600))}"
 UPGRADE_CACHE="$STATE_DIR/.upgrade-cache"
 UPGRADE_TTL=3600
 mkdir -p "$STATE_DIR"
@@ -43,7 +43,7 @@ else
   echo "FILTERS_OK: no"
 fi
 
-if [ -n "${TEXAU_API_KEY:-}" ]; then
+if [ -n "${richapi_API_KEY:-}" ]; then
   echo "API_KEY_SET: yes"
 else
   echo "API_KEY_SET: no"
@@ -56,7 +56,7 @@ else
 fi
 
 if command -v curl >/dev/null 2>&1 && \
-   curl -fsS --max-time 2 -o /dev/null "${TEXAU_MCP_ORIGIN:-https://mcp.texau.com}/health" 2>/dev/null; then
+   curl -fsS --max-time 2 -o /dev/null "${richapi_MCP_ORIGIN:-https://mcp.richapi.com}/health" 2>/dev/null; then
   echo "NET: online"
 else
   echo "NET: offline"
@@ -85,7 +85,7 @@ fi
 # Refresh the upgrade check in the background; never blocks preflight.
 (
   latest="$(curl -fsS --max-time 3 \
-    https://raw.githubusercontent.com/texau/texau-gtm-skills/main/VERSION 2>/dev/null | tr -d '[:space:]')"
+    https://raw.githubusercontent.com/richapi/richapi-gtm-skills/main/VERSION 2>/dev/null | tr -d '[:space:]')"
   {
     date -u +%Y-%m-%dT%H:%M:%SZ
     echo "${latest:-$cur_ver}"

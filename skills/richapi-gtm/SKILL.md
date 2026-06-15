@@ -1,11 +1,11 @@
 ---
-name: texau-gtm
+name: richapi-gtm
 version: 1.2.0
 description: |
-  Entry point for the TexAu GTM skill pack. Routes GTM intents (prospecting, enrichment,
+  Entry point for the richapi GTM skill pack. Routes GTM intents (prospecting, enrichment,
   email finding/verification, account research, pre-meeting briefings, list hygiene,
   competitive intel, CRM export, credit optimization) to specialized sub-skills that call
-  the TexAu MCP at mcp.texau.com. Proactively invoke whenever the user mentions LinkedIn
+  the richapi MCP at mcp.richapi.com. Proactively invoke whenever the user mentions LinkedIn
   leads, prospect lists, email finding/verification, enrichment, ICPs, account research,
   company intelligence, cold outbound, or CRM imports.
 allowed-tools:
@@ -32,31 +32,31 @@ triggers:
   - target account list
 ---
 
-# TexAu GTM — entry router
+# richapi GTM — entry router
 
-You are operating inside the **TexAu GTM Skills** pack. The user's TexAu MCP is
+You are operating inside the **richapi GTM Skills** pack. The user's richapi MCP is
 connected (or should be). Your job here: (1) make sure the catalog is fresh,
 (2) classify the user's intent, (3) route to the right sub-skill.
 
 ## Preamble — run first, every session
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
-_PROACTIVE=$(~/.claude/skills/texau-gtm-skills/bin/texau-skills-config get proactive 2>/dev/null || echo "true")
-_SYNC_ON_START=$(~/.claude/skills/texau-gtm-skills/bin/texau-skills-config get sync_on_start 2>/dev/null || echo "true")
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
+_PROACTIVE=$(~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-config get proactive 2>/dev/null || echo "true")
+_SYNC_ON_START=$(~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-config get sync_on_start 2>/dev/null || echo "true")
 echo "PROACTIVE: $_PROACTIVE"
 echo "SYNC_ON_START: $_SYNC_ON_START"
 ```
 
-**Interpret the output** (keys from [bin/texau-skills-preflight](../../bin/texau-skills-preflight)):
+**Interpret the output** (keys from [bin/richapi-skills-preflight](../../bin/richapi-skills-preflight)):
 
 | Signal | Meaning | Action |
 |---|---|---|
-| `CATALOG_OK: no` | Catalog file missing or corrupt | Block — run `texau-skills-sync` and tell the user. Do not proceed. |
-| `CATALOG_STALE: yes` + `SYNC_ON_START: true` + `NET: online` | Snapshot > 7d old and we can refresh | Run `~/.claude/skills/texau-gtm-skills/bin/texau-skills-sync` silently in the background. Proceed with cached catalog while it runs. |
-| `CATALOG_STALE: yes` + `NET: offline` | Stale and can't refresh | Warn the user once: "Catalog is N days old and I can't reach mcp.texau.com — I'll use the cached version. Credits/tool names may be slightly off." Then proceed. |
-| `API_KEY_SET: no` | `TEXAU_API_KEY` env var missing | If any sub-skill will call a paid tool, tell the user to set it or connect the MCP in their client. |
-| `UPGRADE: <ver>` (non-`none`) | New skills version available | At session end, offer: "texau-gtm-skills v{UPGRADE} is out (you're on v{SKILLS_VERSION}). Run `cd ~/.claude/skills/texau-gtm-skills && git pull` when you have a minute." Do not interrupt current work. |
+| `CATALOG_OK: no` | Catalog file missing or corrupt | Block — run `richapi-skills-sync` and tell the user. Do not proceed. |
+| `CATALOG_STALE: yes` + `SYNC_ON_START: true` + `NET: online` | Snapshot > 7d old and we can refresh | Run `~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-sync` silently in the background. Proceed with cached catalog while it runs. |
+| `CATALOG_STALE: yes` + `NET: offline` | Stale and can't refresh | Warn the user once: "Catalog is N days old and I can't reach mcp.richapi.com — I'll use the cached version. Credits/tool names may be slightly off." Then proceed. |
+| `API_KEY_SET: no` | `richapi_API_KEY` env var missing | If any sub-skill will call a paid tool, tell the user to set it or connect the MCP in their client. |
+| `UPGRADE: <ver>` (non-`none`) | New skills version available | At session end, offer: "richapi-gtm-skills v{UPGRADE} is out (you're on v{SKILLS_VERSION}). Run `cd ~/.claude/skills/richapi-gtm-skills && git pull` when you have a minute." Do not interrupt current work. |
 | `PROACTIVE: false` | User opted out | Do not auto-invoke sub-skills. Surface suggestions but wait for confirmation. |
 
 ## Load the catalog into context
@@ -102,7 +102,7 @@ Match the user's intent and invoke the matching skill. When in doubt, ask (don't
 
 ## What this pack does NOT do
 
-- It does not call the TexAu API directly — all calls go through the MCP tool layer that Claude already has access to (via the connected `mcp.texau.com` server).
+- It does not call the richapi API directly — all calls go through the MCP tool layer that Claude already has access to (via the connected `mcp.richapi.com` server).
 - It does not store customer data. Everything is session-scoped.
 - It does not replace the MCP — the MCP provides tool *execution*; skills provide tool *selection and orchestration*.
 

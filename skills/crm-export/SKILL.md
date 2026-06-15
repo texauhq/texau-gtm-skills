@@ -2,12 +2,12 @@
 name: crm-export
 version: 1.0.0
 description: |
-  Shapes results from any other TexAu GTM skill into a target-CRM-ready format —
+  Shapes results from any other richapi GTM skill into a target-CRM-ready format —
   HubSpot, Salesforce, Pipedrive, Close, Attio, or plain CSV / NDJSON. Picks correct
   field names per CRM, maps LinkedIn and enrichment fields to canonical CRM properties,
   handles custom fields, and offers safe dedupe-on-import hints. Use when the user says
   "push this to <CRM>", "export as CSV", or "format for <CRM>".
-benefits-from: [texau-gtm, build-prospect-list, enrich-and-verify, list-hygiene]
+benefits-from: [richapi-gtm, build-prospect-list, enrich-and-verify, list-hygiene]
 allowed-tools:
   - Bash
   - Read
@@ -26,12 +26,12 @@ triggers:
 
 # crm-export
 
-Take a TexAu result set and hand the user exactly what their CRM's importer wants. This skill is for **one-time or low-frequency file imports** — CSV, NDJSON, copy-paste. If the user needs a recurring API sync, custom field architecture, lifecycle-stage mapping, or is choosing a CRM, route to [crm-sync-expert](../crm-sync-expert/SKILL.md) instead.
+Take a richapi result set and hand the user exactly what their CRM's importer wants. This skill is for **one-time or low-frequency file imports** — CSV, NDJSON, copy-paste. If the user needs a recurring API sync, custom field architecture, lifecycle-stage mapping, or is choosing a CRM, route to [crm-sync-expert](../crm-sync-expert/SKILL.md) instead.
 
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — confirm target
@@ -72,7 +72,7 @@ Internally map to a **canonical record**:
   "company_size": "",
   "city": "",
   "country": "",
-  "source": "texau",
+  "source": "richapi",
   "source_skill": "<skill that produced it>",
   "enriched_at": "<ISO8601>"
 }
@@ -96,7 +96,7 @@ Then project from canonical into the target CRM's field names.
 | company_domain | `website` (on company record) |
 | seniority | custom: `hs_seniority` |
 | industry | `industry` |
-| source | `hs_lead_source_info` (default: `texau`) |
+| source | `hs_lead_source_info` (default: `richapi`) |
 
 Notes:
 - HubSpot dedupes Contacts on **email**. No email → will create a dupe. Surface this.
@@ -171,7 +171,7 @@ One canonical record per line. Include all fields — downstream code can ignore
 
 ## Phase 3 — emit
 
-Default: write to `./texau-export-<YYYYMMDD-HHMM>-<crm>.csv` in the current directory. Offer alternate path if the user prefers.
+Default: write to `./richapi-export-<YYYYMMDD-HHMM>-<crm>.csv` in the current directory. Offer alternate path if the user prefers.
 
 Preview the first 3 rows inline in chat for confirmation before writing.
 
@@ -200,7 +200,7 @@ After emit, give a **tested** instruction block for each CRM:
 
 ## Cost
 
-This skill calls **zero** TexAu tools. It's pure format transformation. Free.
+This skill calls **zero** richapi tools. It's pure format transformation. Free.
 
 ## Follow-ups
 

@@ -10,7 +10,7 @@ description: |
   large output from build-prospect-list / account-research and wants to prioritize
   who to contact first. Proactively invoke when a list is > 50 leads and the user is
   about to start outreach.
-benefits-from: [texau-gtm, build-prospect-list, account-research, enrich-and-verify, pre-meeting-briefing, sequence-builder]
+benefits-from: [richapi-gtm, build-prospect-list, account-research, enrich-and-verify, pre-meeting-briefing, sequence-builder]
 allowed-tools:
   - Bash
   - Read
@@ -33,7 +33,7 @@ A scoring engine. Takes whatever upstream produced — a prospect list, an accou
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — what the user is scoring

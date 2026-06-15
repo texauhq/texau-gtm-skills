@@ -9,7 +9,7 @@ description: |
   find people, build a list, source prospects, target accounts, or search LinkedIn by
   filters. Proactively invoke on phrases like "find 20 CTOs", "VP Sales at SaaS",
   "list of founders in NYC", "target account list".
-benefits-from: [texau-gtm, cost-optimizer, crm-export]
+benefits-from: [richapi-gtm, cost-optimizer, crm-export]
 allowed-tools:
   - Bash
   - Read
@@ -32,10 +32,10 @@ Translate a plain-English ICP into an executable, cost-optimal prospect search.
 ## Preamble — run first
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
-If `CATALOG_OK: no` → stop and run `texau-skills-sync`. Do not guess tool names.
+If `CATALOG_OK: no` → stop and run `richapi-skills-sync`. Do not guess tool names.
 
 ## Phase 0 — parse the ICP
 

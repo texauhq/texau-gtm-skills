@@ -12,7 +12,7 @@ description: |
   Proactively invoke on "sync to my CRM", "API integration", "custom fields",
   "lifecycle stages", "lead vs contact", "GHL workflow", "duplicate rule", "upsert",
   "two-way sync", "which CRM should I use".
-benefits-from: [texau-gtm, crm-export, enrich-and-verify, outreach-expert]
+benefits-from: [richapi-gtm, crm-export, enrich-and-verify, outreach-expert]
 allowed-tools:
   - Bash
   - Read
@@ -41,7 +41,7 @@ An architect for CRM integration. `crm-export` shapes a CSV; this skill designs 
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## Phase 0 — what problem are we actually solving
@@ -170,24 +170,24 @@ Every CRM supports an "upsert" pattern; the key differs:
 
 ### Design rules
 
-1. Decide the **property group** first (e.g. "TexAu Enrichment") — keeps custom fields visually contained from the CRM's default UI.
-2. **Name fields with a source prefix** — `texau_linkedin_url`, not `linkedin_url`. Future-you will thank present-you when another tool pushes the same field.
+1. Decide the **property group** first (e.g. "richapi Enrichment") — keeps custom fields visually contained from the CRM's default UI.
+2. **Name fields with a source prefix** — `richapi_linkedin_url`, not `linkedin_url`. Future-you will thank present-you when another tool pushes the same field.
 3. **Pick the type carefully.** In Salesforce, custom field type cannot be changed after records exist. In HubSpot, type is mutable but it breaks integrations downstream. Always create as the type you want to end with.
 4. **Limit picklist values.** CRMs cap at ~150 picklist values, and cleanup after uncontrolled growth is painful. For `seniority` and `function`, use fixed sets (the ones in `_lib/filters-catalog.json`).
 5. **Write a field dictionary** — a one-page doc mapping each custom field to its meaning, source, allowed values, and last-updated date. Commit it. Every CRM has an "admin guide" that nobody writes; this is that.
 
-### Common custom fields to add for TexAu-enriched data
+### Common custom fields to add for richapi-enriched data
 
 | Field | Type | Source |
 |---|---|---|
-| `texau_linkedin_url` | URL | `enrich_profile.linkedinUrl` |
-| `texau_entity_urn` | Single-line text | `enrich_profile.entityUrn` |
-| `texau_seniority` | Picklist (10 values) | Resolved from catalog |
-| `texau_function` | Picklist (26 values) | Resolved from catalog |
-| `texau_company_size_band` | Picklist (9 values) | Resolved from catalog |
-| `texau_enriched_at` | Date/Datetime | Client-set on sync |
-| `texau_email_status` | Picklist (valid / risky / invalid / unknown / not_found) | From verifier |
-| `texau_data_freshness_days` | Number | Derived |
+| `richapi_linkedin_url` | URL | `enrich_profile.linkedinUrl` |
+| `richapi_entity_urn` | Single-line text | `enrich_profile.entityUrn` |
+| `richapi_seniority` | Picklist (10 values) | Resolved from catalog |
+| `richapi_function` | Picklist (26 values) | Resolved from catalog |
+| `richapi_company_size_band` | Picklist (9 values) | Resolved from catalog |
+| `richapi_enriched_at` | Date/Datetime | Client-set on sync |
+| `richapi_email_status` | Picklist (valid / risky / invalid / unknown / not_found) | From verifier |
+| `richapi_data_freshness_days` | Number | Derived |
 
 ## Phase 5 — dedupe + duplicate rules
 
@@ -254,7 +254,7 @@ Stages should only move **forward** automatically. Manual moves backward when ne
 7. Missing the `DoNotEmail` / `Opt Out` checks — you enrich someone who unsubscribed, then re-sequence them. Legal risk + reputational damage.
 8. Ignoring Salesforce's duplicate rules thinking they'll catch your mess. They fire on insert; bulk loads bypass them if you misconfigure.
 9. Treating GHL like HubSpot. There's no Company object. Stop trying to create one.
-10. Not versioning the field dictionary. In 3 months, nobody remembers what `texau_industry_id` means and a PM redefines it to their own use case.
+10. Not versioning the field dictionary. In 3 months, nobody remembers what `richapi_industry_id` means and a PM redefines it to their own use case.
 
 ## Phase 8 — CRM selection (if the user hasn't chosen yet)
 
@@ -282,7 +282,7 @@ Three answers usually narrow to one: `(team size, business model, regulated?)` �
 ## What this skill does NOT do
 
 - It does not execute a sync. It designs the sync; the user (or an iPaaS / custom code / [crm-export](../crm-export/SKILL.md)) runs it.
-- It does not call the TexAu MCP. No paid credits here.
+- It does not call the richapi MCP. No paid credits here.
 - It does not write Apex, Zapier Zaps, or n8n workflows. It tells the user *what* each should do.
 
 ## Handoff patterns

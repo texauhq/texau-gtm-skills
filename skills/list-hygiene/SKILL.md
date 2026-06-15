@@ -7,7 +7,7 @@ description: |
   and flags risky entries. Uses cheap local utilities first (normalize_*, identify_email_type)
   before any paid verification. Use when the user has a list and says "clean it", "prep
   it for send", "dedupe", or "verify before campaign".
-benefits-from: [texau-gtm, enrich-and-verify, crm-export]
+benefits-from: [richapi-gtm, enrich-and-verify, crm-export]
 allowed-tools:
   - Bash
   - Read
@@ -30,7 +30,7 @@ Turn a messy list into a campaign-ready one. **Cheap local operations first; pai
 ## Preamble
 
 ```bash
-~/.claude/skills/texau-gtm-skills/bin/texau-skills-preflight
+~/.claude/skills/richapi-gtm-skills/bin/richapi-skills-preflight
 ```
 
 ## The pipeline

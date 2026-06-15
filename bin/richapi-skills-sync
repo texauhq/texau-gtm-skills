@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Usage: texau-skills-sync [--age | --check | --help]
+# Usage: richapi-skills-sync [--age | --check | --help]
 #
-# Resolution order: public catalog → MCP tools/list (needs TEXAU_API_KEY) → keep cache.
+# Resolution order: public catalog → MCP tools/list (needs richapi_API_KEY) → keep cache.
 # Idempotent; writes atomically.
 
 set -euo pipefail
@@ -10,11 +10,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LIB="$ROOT/_lib"
 CATALOG="$LIB/mcp-catalog.json"
 FILTERS="$LIB/filters-catalog.json"
-STATE_DIR="${TEXAU_SKILLS_HOME:-$HOME/.texau-skills}"
+STATE_DIR="${richapi_SKILLS_HOME:-$HOME/.richapi-skills}"
 LAST_SYNC="$STATE_DIR/.last-sync"
-MCP_ORIGIN="${TEXAU_MCP_ORIGIN:-https://mcp.texau.com}"
-API_ORIGIN="${TEXAU_API_ORIGIN:-https://v3-api.texau.com}"
-VERBOSE="${TEXAU_SKILLS_VERBOSE:-0}"
+MCP_ORIGIN="${richapi_MCP_ORIGIN:-https://mcp.richapi.com}"
+API_ORIGIN="${richapi_API_ORIGIN:-https://v3-api.richapi.com}"
+VERBOSE="${richapi_SKILLS_VERBOSE:-0}"
 
 mkdir -p "$STATE_DIR"
 
@@ -49,13 +49,13 @@ try_public_catalog() {
 }
 
 try_mcp_tools_list() {
-  [ -n "${TEXAU_API_KEY:-}" ] || { log "no TEXAU_API_KEY; skipping MCP fallback"; return 1; }
+  [ -n "${richapi_API_KEY:-}" ] || { log "no richapi_API_KEY; skipping MCP fallback"; return 1; }
   log "POST $MCP_ORIGIN/mcp tools/list"
 
   local body code
   body="$(curl -fsS -w $'\n%{http_code}' --max-time 15 \
     -X POST "$MCP_ORIGIN/mcp" \
-    -H "x-api-key: $TEXAU_API_KEY" \
+    -H "x-api-key: $richapi_API_KEY" \
     -H "content-type: application/json" \
     -H "accept: application/json, text/event-stream" \
     -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' 2>/dev/null || true)"
@@ -88,8 +88,8 @@ try_mcp_tools_list() {
          "$schema":    "./mcp-catalog.schema.json",
          generated_at: $ts,
          generated_by: $by,
-         mcp_endpoint: ($existing[0].mcp_endpoint // "https://mcp.texau.com/mcp"),
-         api_base:     ($existing[0].api_base     // "https://v3-api.texau.com/api/v1"),
+         mcp_endpoint: ($existing[0].mcp_endpoint // "https://mcp.richapi.com/mcp"),
+         api_base:     ($existing[0].api_base     // "https://v3-api.richapi.com/api/v1"),
          version:      ($existing[0].version      // "unknown"),
          tools:
            ($curated | map(. as $c
@@ -106,11 +106,11 @@ try_mcp_tools_list() {
 }
 
 try_refresh_filters() {
-  [ -n "${TEXAU_API_KEY:-}" ] || return 0
+  [ -n "${richapi_API_KEY:-}" ] || return 0
   log "GET $API_ORIGIN/api/v1/search_reference_data"
   local body code now
   body="$(curl -fsS -w $'\n%{http_code}' --max-time 10 \
-    -H "x-api-key: $TEXAU_API_KEY" \
+    -H "x-api-key: $richapi_API_KEY" \
     "$API_ORIGIN/api/v1/search_reference_data" 2>/dev/null || true)"
   code="${body##*$'\n'}"
   body="${body%$'\n'*}"
@@ -126,7 +126,7 @@ main() {
     :
   else
     warn "all live sources failed; cached snapshot is still in place."
-    warn "set TEXAU_API_KEY=<key> for the MCP fallback, or enable the public /catalog.json endpoint."
+    warn "set richapi_API_KEY=<key> for the MCP fallback, or enable the public /catalog.json endpoint."
   fi
   try_refresh_filters
   date -u +%Y-%m-%dT%H:%M:%SZ > "$LAST_SYNC"
@@ -144,19 +144,19 @@ epoch_of() {
 case "${1:-}" in
   -h|--help|help)
     cat <<EOF
-texau-skills-sync — refresh MCP catalog snapshots.
+richapi-skills-sync — refresh MCP catalog snapshots.
 
 Usage:
-  texau-skills-sync            Run sync. Reads \$TEXAU_API_KEY if set.
-  texau-skills-sync --age      Print age (seconds) of last successful sync.
-  texau-skills-sync --check    Exit 0 if fresh (<7d), 1 if stale.
+  richapi-skills-sync            Run sync. Reads \$richapi_API_KEY if set.
+  richapi-skills-sync --age      Print age (seconds) of last successful sync.
+  richapi-skills-sync --check    Exit 0 if fresh (<7d), 1 if stale.
 
 Env:
-  TEXAU_API_KEY         Required only if public catalog is unreachable.
-  TEXAU_MCP_ORIGIN      Default: https://mcp.texau.com
-  TEXAU_API_ORIGIN      Default: https://v3-api.texau.com
-  TEXAU_SKILLS_HOME     State dir (default: ~/.texau-skills)
-  TEXAU_SKILLS_VERBOSE  Set to 1 for verbose logs.
+  richapi_API_KEY         Required only if public catalog is unreachable.
+  richapi_MCP_ORIGIN      Default: https://mcp.richapi.com
+  richapi_API_ORIGIN      Default: https://v3-api.richapi.com
+  richapi_SKILLS_HOME     State dir (default: ~/.richapi-skills)
+  richapi_SKILLS_VERBOSE  Set to 1 for verbose logs.
 EOF
     exit 0
     ;;
